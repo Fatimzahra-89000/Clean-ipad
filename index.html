@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#6b2431">
+<title>My Muslim Clean Dashboard</title>
+<style>
+:root{--wine:#692536;--wine2:#8b4a58;--cream:#f6eee8;--card:rgba(255,249,245,.88);--ink:#533e3c;--line:#decfc7;--gold:#a68764}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#e8d8d1,#f7f0eb 48%,#d8c2bd);font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",sans-serif;color:var(--ink)}
+.page{max-width:1050px;margin:auto;padding:22px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{font-family:Georgia,serif;color:var(--wine);font-size:25px}
+.muted{font-size:12px;color:#806b65}
+button{border:0;background:var(--wine);color:#fff;padding:9px 13px;border-radius:14px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.8);border-radius:25px;padding:17px;box-shadow:0 9px 28px #5b29301c;backdrop-filter:blur(8px)}
+.wide{grid-column:span 2}.tall{min-height:165px}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:800}
+.time{font:56px/1 Georgia,serif;color:var(--wine);margin-top:8px}
+.date{margin-top:7px;color:#806b65;text-transform:capitalize}
+.arabic{text-align:center;font:34px Georgia,serif;color:var(--wine);margin:9px 0}
+.quote{text-align:center;font:15px/1.5 Georgia,serif}
+.big{font-size:27px;color:var(--wine);margin-top:7px}
+.rows{margin-top:8px}.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}.row:last-child{border:0}
+.next{margin-top:9px;background:#ead4d6;border-radius:14px;padding:9px;font-size:13px;color:var(--wine)}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.page{padding:12px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div><div class="brand">My Muslim Clean iPad 🤍</div><div class="muted">Tableau de bord • mise à jour automatique</div></div>
+    <button onclick="refresh()">Actualiser</button>
+  </div>
+  <div class="grid">
+    <section class="card wide tall"><div class="label">Heure</div><div class="time" id="clock">--:--</div><div class="date" id="date">—</div></section>
+    <section class="card tall"><div class="label">Batterie iPad</div><div class="big" id="battery">—</div><div class="muted" id="charge">Lecture en cours…</div></section>
+    <section class="card tall"><div class="label">Météo</div><div class="big" id="temp">—</div><div class="date" id="sky">Auxerre · —</div></section>
+    <section class="card wide tall"><div class="label">Horaires de prière · Auxerre</div><div class="rows" id="prayers">Chargement…</div><div class="next" id="next">Prochaine prière : —</div></section>
+    <section class="card tall"><div class="arabic">الحمد لله</div><div class="quote">Chaque jour est une nouvelle occasion de se rapprocher d'Allah.</div></section>
+    <section class="card wide tall"><div class="label">Aujourd'hui</div><div class="big" id="today">—</div><div class="date">📚 Cours · 🕌 Prière · 🌷 Temps pour moi</div></section>
+    <section class="card tall"><div class="label">Petit rappel</div><div class="quote" style="margin-top:12px">« Avec la difficulté vient certes la facilité. »</div><div class="muted" style="text-align:center;margin-top:9px">Coran · 94:6</div></section>
+  </div>
+</div>
+<script>
+const lat=47.7982,lon=3.5738;
+const names={Fajr:"Fajr",Sunrise:"Chorouq",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"};
+function clock(){const d=new Date();document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});document.getElementById("today").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});}
+clock();setInterval(clock,1000);
+async function battery(){try{if(!navigator.getBattery)throw 0;const b=await navigator.getBattery();const set=()=>document.getElementById("battery").textContent=Math.round(b.level*100)+" %";set();b.addEventListener("levelchange",set);document.getElementById("charge").textContent=b.charging?"En charge ⚡":"Sur batterie";}catch(e){document.getElementById("battery").textContent="—";document.getElementById("charge").textContent="Accès batterie non autorisé par Safari";}}
+async function weather(){try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Europe%2FParis`);const x=await r.json(),c={0:"ciel dégagé",1:"plutôt dégagé",2:"partiellement nuageux",3:"nuageux",45:"brouillard",48:"brouillard",51:"bruine",61:"pluie",63:"pluie",65:"forte pluie",71:"neige",80:"averses",95:"orage"};document.getElementById("temp").textContent=Math.round(x.current.temperature_2m)+" °C";document.getElementById("sky").textContent="Auxerre · "+(c[x.current.weather_code]||"conditions actuelles");}catch(e){document.getElementById("sky").textContent="Auxerre · météo indisponible";}}
+async function prayers(){try{const d=new Date(),u=`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}?latitude=${lat}&longitude=${lon}&method=2`;const x=await (await fetch(u)).json(),t=x.data.timings,ks=["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];document.getElementById("prayers").innerHTML=ks.map(k=>`<div class="row"><span>${names[k]}</span><b>${t[k]}</b></div>`).join("");const now=d.getHours()*60+d.getMinutes();let n=null;for(const k of ["Fajr","Dhuhr","Asr","Maghrib","Isha"]){const [h,m]=t[k].split(":").map(Number);if(h*60+m>now){n=[names[k],t[k]];break}}document.getElementById("next").textContent=n?`Prochaine prière : ${n[0]} à ${n[1]}`:"Toutes les prières sont passées pour aujourd'hui.";}catch(e){document.getElementById("prayers").textContent="Connexion nécessaire pour actualiser les horaires.";document.getElementById("next").textContent="Horaires temporairement indisponibles";}}
+function refresh(){weather();prayers();battery();clock()}weather();prayers();battery();
+</script>
+</body>
+</html>
