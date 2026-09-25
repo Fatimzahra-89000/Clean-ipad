@@ -21,7 +21,7 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(
 .next{margin-top:8px;background:var(--flower-soft);border:1px solid var(--line);border-radius:14px;padding:9px;font-size:12px;color:var(--flower-dark);font-weight:700}.arabic{text-align:center;font:34px Georgia,serif;color:var(--flower-dark);margin:6px 0 3px}.quote{text-align:center;font:15px/1.5 Georgia,serif;color:#76535d}
 .bar{height:8px;background:#fde1e7;border-radius:20px;overflow:hidden;margin-top:11px}.fill{height:100%;width:0;background:var(--flower);border-radius:20px}
 .checks{margin-top:8px}.check{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px}.check input{accent-color:var(--flower);width:16px;height:16px}
-.agenda{margin-top:9px;display:grid;gap:7px}.event{display:flex;gap:9px;align-items:center;background:var(--flower-pale);border:1px solid var(--line);border-radius:13px;padding:8px 9px;font-size:12px}.event b{color:var(--flower-dark);min-width:42px}.selfcare{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.care{background:var(--flower-soft);border:1px solid var(--line);border-radius:13px;padding:9px;text-align:center;font-size:11px}.care span{display:block;font-size:19px;margin-bottom:3px}
+.agenda{margin-top:9px;display:grid;gap:7px}.event{display:flex;gap:9px;align-items:center;background:var(--flower-pale);border:1px solid var(--line);border-radius:13px;padding:8px 9px;font-size:12px}.event b{color:var(--flower-dark);min-width:42px}.selfcare{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.care{background:var(--flower-soft);border:1px solid var(--line);border-radius:13px;padding:9px;text-align:center;font-size:11px;cursor:pointer;transition:.2s;user-select:none}.care span{display:block;font-size:19px;margin-bottom:3px}.care.selected{background:var(--flower);color:white;border-color:var(--flower-dark);transform:translateY(-1px);box-shadow:0 5px 14px #d98a9b33}.care.selected .care-name{color:white}.care input{display:none}.care-name{color:var(--ink)}
 .editable{outline:none}.editing .editable{background:#fff8fa;border-radius:8px;box-shadow:0 0 0 2px #ffb7c566;padding:2px 5px}.editing .editable:focus{box-shadow:0 0 0 2px var(--flower)}
 .edit-note{display:none}.editing .edit-note{display:block;color:var(--flower-dark);font-size:10px;margin-top:10px}.save-state{font-size:11px;color:var(--flower-dark);margin-top:7px;min-height:14px}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2}}@media(max-width:500px){.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.page{padding:12px}.brand{font-size:23px}.actions{max-width:190px}}
@@ -58,10 +58,12 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(
 <div class="event"><b class="editable" data-key="agendaTime3">SOIR</b><span class="editable" data-key="agenda3">Préparer demain</span></div>
 </div><div class="edit-note">Écris tes propres horaires et activités.</div></section>
 
-<section class="card tall"><div class="label editable" data-key="careLabel">Self-care</div><div class="selfcare">
-<div class="care"><span>🕌</span><span class="editable" data-key="care1">Prière</span></div><div class="care"><span>💧</span><span class="editable" data-key="care2">Boire</span></div>
-<div class="care"><span>🌸</span><span class="editable" data-key="care3">Pause</span></div><div class="care"><span>🤍</span><span class="editable" data-key="care4">Respirer</span></div>
-</div></section>
+<section class="card tall"><div class="label editable" data-key="careLabel">Self-care · ma journée</div><div class="selfcare">
+<label class="care" data-care="priere"><input type="checkbox"><span>🕌</span><span class="care-name editable" data-key="care1">Prière</span></label><label class="care" data-care="boire"><input type="checkbox"><span>💧</span><span class="care-name editable" data-key="care2">Boire</span></label>
+<label class="care" data-care="pause"><input type="checkbox"><span>🌸</span><span class="care-name editable" data-key="care3">Pause</span></label><label class="care" data-care="respirer"><input type="checkbox"><span>🤍</span><span class="care-name editable" data-key="care4">Respirer</span></label>
+<label class="care" data-care="quran"><input type="checkbox"><span>📖</span><span class="care-name editable" data-key="care5">Coran</span></label><label class="care" data-care="marche"><input type="checkbox"><span>🚶🏻‍♀️</span><span class="care-name editable" data-key="care6">Marcher</span></label>
+<label class="care" data-care="devoirs"><input type="checkbox"><span>📚</span><span class="care-name editable" data-key="care7">Devoirs</span></label><label class="care" data-care="rangement"><input type="checkbox"><span>🧺</span><span class="care-name editable" data-key="care8">Ranger</span></label>
+</div><div class="muted" style="margin-top:9px">Touche une activité pour la sélectionner ♡</div><div class="edit-note">Tu peux modifier les noms avec « Modifier ».</div></section>
 
 <section class="card tall"><div class="label editable" data-key="todayLabel">Aujourd'hui</div><div class="big" id="weekday">—</div><div class="date editable" data-key="todayText">Prends ton temps, avance à ton rythme ♡</div></section>
 
@@ -88,7 +90,7 @@ function enableEditing(){app.classList.add("editing");document.querySelectorAll(
 function disableEditing(){app.classList.remove("editing");document.querySelectorAll(".editable[data-key]").forEach(el=>el.contentEditable="false");document.getElementById("editBtn").textContent="✎ Modifier";document.getElementById("editBtn").classList.remove("secondary");saveState.textContent="✓ Tes modifications sont enregistrées"}
 document.getElementById("editBtn").addEventListener("click",()=>app.classList.contains("editing")?disableEditing():enableEditing());
 document.getElementById("refreshBtn").addEventListener("click",()=>{clock();weather();prayers()});
-document.querySelectorAll("[data-task]").forEach(x=>x.addEventListener("change",()=>localStorage.setItem("task-"+x.dataset.task,x.checked)));
+document.querySelectorAll("[data-task]").forEach(x=>x.addEventListener("change",()=>localStorage.setItem("task-"+x.dataset.task,x.checked)));\ndocument.querySelectorAll("[data-care]").forEach(x=>{const input=x.querySelector("input");const key="care-"+x.dataset.care;input.checked=localStorage.getItem(key)==="true";x.classList.toggle("selected",input.checked);x.addEventListener("click",e=>{if(e.target.closest(".editable"))return;input.checked=!input.checked;localStorage.setItem(key,input.checked);x.classList.toggle("selected",input.checked);});});
 loadPersonal();clock();weather();prayers();setInterval(clock,1000);
 </script>
 </body>
