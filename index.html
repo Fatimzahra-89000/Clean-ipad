@@ -90,8 +90,21 @@ function enableEditing(){app.classList.add("editing");document.querySelectorAll(
 function disableEditing(){app.classList.remove("editing");document.querySelectorAll(".editable[data-key]").forEach(el=>el.contentEditable="false");document.getElementById("editBtn").textContent="✎ Modifier";document.getElementById("editBtn").classList.remove("secondary");saveState.textContent="✓ Tes modifications sont enregistrées"}
 document.getElementById("editBtn").addEventListener("click",()=>app.classList.contains("editing")?disableEditing():enableEditing());
 document.getElementById("refreshBtn").addEventListener("click",()=>{clock();weather();prayers()});
-document.querySelectorAll("[data-task]").forEach(x=>x.addEventListener("change",()=>localStorage.setItem("task-"+x.dataset.task,x.checked)));\ndocument.querySelectorAll("[data-care]").forEach(x=>{const input=x.querySelector("input");const key="care-"+x.dataset.care;input.checked=localStorage.getItem(key)==="true";x.classList.toggle("selected",input.checked);x.addEventListener("click",e=>{if(e.target.closest(".editable"))return;input.checked=!input.checked;localStorage.setItem(key,input.checked);x.classList.toggle("selected",input.checked);});});
-loadPersonal();clock();weather();prayers();setInterval(clock,1000);
+document.querySelectorAll("[data-task]").forEach(x=>x.addEventListener("change",()=>localStorage.setItem("task-"+x.dataset.task,x.checked)));
+document.querySelectorAll("[data-care]").forEach(x=>{
+  const input=x.querySelector("input");
+  const key="care-"+x.dataset.care;
+  input.checked=localStorage.getItem(key)==="true";
+  x.classList.toggle("selected",input.checked);
+  input.addEventListener("change",()=>{
+    localStorage.setItem(key,input.checked);
+    x.classList.toggle("selected",input.checked);
+  });
+});
+loadPersonal();clock();weather();prayers();
+setInterval(clock,1000);
+setInterval(prayers,60000);
+setInterval(weather,600000);
 </script>
 </body>
 </html>
