@@ -21,7 +21,7 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(
 .next{margin-top:8px;background:var(--flower-soft);border:1px solid var(--line);border-radius:14px;padding:9px;font-size:12px;color:var(--flower-dark);font-weight:700}.arabic{text-align:center;font:34px Georgia,serif;color:var(--flower-dark);margin:6px 0 3px}.quote{text-align:center;font:15px/1.5 Georgia,serif;color:#76535d}
 .bar{height:8px;background:#fde1e7;border-radius:20px;overflow:hidden;margin-top:11px}.fill{height:100%;width:0;background:var(--flower);border-radius:20px}
 .checks{margin-top:8px}.check{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px}.check input{accent-color:var(--flower);width:16px;height:16px}
-.agenda{margin-top:9px;display:grid;gap:7px}.event{display:flex;gap:9px;align-items:center;background:var(--flower-pale);border:1px solid var(--line);border-radius:13px;padding:8px 9px;font-size:12px}.event b{color:var(--flower-dark);min-width:42px}.selfcare{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.care{background:var(--flower-soft);border:1px solid var(--line);border-radius:13px;padding:9px;text-align:center;font-size:11px;cursor:pointer;transition:.2s;user-select:none}.care span{display:block;font-size:19px;margin-bottom:3px}.care.selected{background:var(--flower);color:white;border-color:var(--flower-dark);transform:translateY(-1px);box-shadow:0 5px 14px #d98a9b33}.care.selected .care-name{color:white}.care input{display:none}.care-name{color:var(--ink)}
+.agenda{margin-top:9px;display:grid;gap:7px}.event{display:flex;gap:9px;align-items:center;background:var(--flower-pale);border:1px solid var(--line);border-radius:13px;padding:8px 9px;font-size:12px}.event b{color:var(--flower-dark);min-width:42px}.selfcare{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.care{background:var(--flower-soft);border:1px solid var(--line);border-radius:13px;padding:9px;text-align:center;font-size:11px;cursor:pointer;transition:.2s;user-select:none}.care span{display:block;font-size:19px;margin-bottom:3px}.care.selected{background:var(--flower);color:white;border-color:var(--flower-dark);transform:translateY(-1px);box-shadow:0 5px 14px #d98a9b33}.care.selected .care-name{color:white}.care input{position:absolute;opacity:0;pointer-events:none}.care-name{color:var(--ink)}.care:has(input:checked){background:var(--flower);color:white;border-color:var(--flower-dark);transform:translateY(-1px);box-shadow:0 5px 14px #d98a9b33}.care:has(input:checked) .care-name{color:white}
 .editable{outline:none}.editing .editable{background:#fff8fa;border-radius:8px;box-shadow:0 0 0 2px #ffb7c566;padding:2px 5px}.editing .editable:focus{box-shadow:0 0 0 2px var(--flower)}
 .edit-note{display:none}.editing .edit-note{display:block;color:var(--flower-dark);font-size:10px;margin-top:10px}.save-state{font-size:11px;color:var(--flower-dark);margin-top:7px;min-height:14px}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2}}@media(max-width:500px){.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.page{padding:12px}.brand{font-size:23px}.actions{max-width:190px}}
@@ -74,34 +74,158 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(
 <script>
 const lat=47.7982,lon=3.5738,city="Auxerre";
 let currentDateKey="";
-function autoMode(){const d=new Date(),mins=d.getHours()*60+d.getMinutes(),night=mins>=1200||mins<450;document.body.classList.toggle("night",night);document.querySelector("meta[name=theme-color]").setAttribute("content",night?"#c9b6e8":"#ffb7c5");document.getElementById("modePill")?.replaceChildren(document.createTextNode(night?"Mode nuit · violet pastel ♡":"Mode journée · rose ♡"));}
-function autoDailyReset(d){const key=d.toLocaleDateString("fr-CA");if(currentDateKey===key)return;currentDateKey=key;const last=localStorage.getItem("dashboard-day");if(last!==key){["cours","revision","pause"].forEach(k=>localStorage.removeItem("task-"+k));localStorage.setItem("dashboard-day",key);document.querySelectorAll("[data-task]").forEach(x=>x.checked=false);}}
-const names={Fajr:"Fajr",Sunrise:"Chorouq",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"};
-const app=document.getElementById("app"),saveState=document.getElementById("saveState");
+const app=document.getElementById("app");
+const saveState=document.getElementById("saveState");
 
-function clock(){const d=new Date(),h=d.getHours();autoMode();autoDailyReset(d);document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});document.getElementById("weekday").textContent=d.toLocaleDateString("fr-FR",{weekday:"long"});document.getElementById("greeting").textContent=h<12?"Bonjour ♡":h<18?"Bon après-midi ♡":"Bonne soirée ♡";dayProgress(d)}
-function dayProgress(d){const sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds(),p=Math.round(sec/86400*100),remain=86400-sec,h=Math.floor(remain/3600),m=Math.floor(remain%3600/60);document.getElementById("dayProgress").textContent=p+" %";document.getElementById("dayRemaining").textContent="Il reste "+h+" h "+m+" min avant minuit";document.getElementById("dayFill").style.width=p+"%"}
-async function weather(){try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Europe%2FParis`),x=await r.json(),c={0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",61:"🌧️",63:"🌧️",65:"🌧️",71:"❄️",80:"🌦️",95:"⛈️"};document.getElementById("temp").textContent=Math.round(x.current.temperature_2m)+" °C";document.getElementById("sky").textContent=city+" · maintenant";document.getElementById("weatherStatus").textContent=(c[x.current.weather_code]||"♡")+"  conditions actuelles"}catch(e){document.getElementById("sky").textContent=city+" · indisponible";document.getElementById("weatherStatus").textContent="Connexion indisponible"}}
-async function prayers(){try{const d=new Date(),u=`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}?latitude=${lat}&longitude=${lon}&method=2`,x=await(await fetch(u)).json(),t=x.data.timings,ks=["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];document.getElementById("prayers").innerHTML=ks.map(k=>`<div class="row"><span>${names[k]}</span><b>${t[k]}</b></div>`).join("");const now=d.getHours()*60+d.getMinutes();let n=null;for(const k of ["Fajr","Dhuhr","Asr","Maghrib","Isha"]){const [h,m]=t[k].split(":").map(Number);if(h*60+m>now){n=[names[k],t[k]];break}}document.getElementById("next").textContent=n?`Prochaine prière : ${n[0]} à ${n[1]} ♡`:"Toutes les prières sont passées pour aujourd'hui."}catch(e){document.getElementById("prayers").textContent="Connexion nécessaire pour actualiser.";document.getElementById("next").textContent="Horaires temporairement indisponibles"}}
+function storageGet(key){
+  try{return localStorage.getItem(key)}catch(e){return null}
+}
+function storageSet(key,value){
+  try{localStorage.setItem(key,value)}catch(e){}
+}
+function storageRemove(key){
+  try{localStorage.removeItem(key)}catch(e){}
+}
 
-function loadPersonal(){document.querySelectorAll(".editable[data-key]").forEach(el=>{const v=localStorage.getItem("dash-"+el.dataset.key);if(v!==null)el.innerHTML=v});document.querySelectorAll("[data-task]").forEach(x=>x.checked=localStorage.getItem("task-"+x.dataset.task)==="true")}
-function savePersonal(el){localStorage.setItem("dash-"+el.dataset.key,el.innerHTML);saveState.textContent="✓ Enregistré sur cet iPad";clearTimeout(window.saveTimer);window.saveTimer=setTimeout(()=>saveState.textContent="",1800)}
-function enableEditing(){app.classList.add("editing");document.querySelectorAll(".editable[data-key]").forEach(el=>{el.contentEditable="true";el.addEventListener("input",()=>savePersonal(el),{once:false})});document.getElementById("editBtn").textContent="✓ Terminer";document.getElementById("editBtn").classList.add("secondary");saveState.textContent="Mode modification : touche un texte pour l'écrire à ta façon."}
-function disableEditing(){app.classList.remove("editing");document.querySelectorAll(".editable[data-key]").forEach(el=>el.contentEditable="false");document.getElementById("editBtn").textContent="✎ Modifier";document.getElementById("editBtn").classList.remove("secondary");saveState.textContent="✓ Tes modifications sont enregistrées"}
-document.getElementById("editBtn").addEventListener("click",()=>app.classList.contains("editing")?disableEditing():enableEditing());
-document.getElementById("refreshBtn").addEventListener("click",()=>{clock();weather();prayers()});
-document.querySelectorAll("[data-task]").forEach(x=>x.addEventListener("change",()=>localStorage.setItem("task-"+x.dataset.task,x.checked)));
+function autoMode(){
+  const d=new Date(),mins=d.getHours()*60+d.getMinutes();
+  const night=mins>=1200||mins<450;
+  document.body.classList.toggle("night",night);
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content",night?"#c9b6e8":"#ffb7c5");
+  const pill=document.getElementById("modePill");
+  if(pill) pill.textContent=night?"Mode nuit · violet pastel ♡":"Mode journée · rose ♡";
+}
+
+function autoDailyReset(d){
+  const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  if(currentDateKey===key)return;
+  currentDateKey=key;
+  const last=storageGet("dashboard-day");
+  if(last!==key){
+    ["cours","revision","pause"].forEach(k=>storageRemove("task-"+k));
+    storageSet("dashboard-day",key);
+    document.querySelectorAll("[data-task]").forEach(x=>x.checked=false);
+  }
+}
+
+function clock(){
+  const d=new Date(),h=d.getHours();
+  autoMode();
+  autoDailyReset(d);
+  document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
+  document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  document.getElementById("weekday").textContent=d.toLocaleDateString("fr-FR",{weekday:"long"});
+  document.getElementById("greeting").textContent=h<12?"Bonjour ♡":h<18?"Bon après-midi ♡":"Bonne soirée ♡";
+  const sec=h*3600+d.getMinutes()*60+d.getSeconds();
+  const p=Math.round(sec/86400*100),remain=86400-sec;
+  const rh=Math.floor(remain/3600),rm=Math.floor((remain%3600)/60);
+  document.getElementById("dayProgress").textContent=p+" %";
+  document.getElementById("dayRemaining").textContent="Il reste "+rh+" h "+rm+" min avant minuit";
+  document.getElementById("dayFill").style.width=p+"%";
+}
+
+async function weather(){
+  try{
+    const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Europe%2FParis`;
+    const r=await fetch(url);
+    if(!r.ok) throw new Error("weather");
+    const x=await r.json();
+    const icons={0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",61:"🌧️",63:"🌧️",65:"🌧️",71:"❄️",80:"🌦️",95:"⛈️"};
+    document.getElementById("temp").textContent=Math.round(x.current.temperature_2m)+" °C";
+    document.getElementById("sky").textContent=city+" · maintenant";
+    document.getElementById("weatherStatus").textContent=(icons[x.current.weather_code]||"♡")+"  conditions actuelles";
+  }catch(e){
+    document.getElementById("temp").textContent="—";
+    document.getElementById("sky").textContent=city+" · indisponible";
+    document.getElementById("weatherStatus").textContent="Météo indisponible";
+  }
+}
+
+async function prayers(){
+  try{
+    const d=new Date();
+    const url=`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}?latitude=${lat}&longitude=${lon}&method=2`;
+    const r=await fetch(url);
+    if(!r.ok) throw new Error("prayer");
+    const x=await r.json(),t=x.data.timings;
+    const names={Fajr:"Fajr",Sunrise:"Chorouq",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"};
+    const ks=["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
+    document.getElementById("prayers").innerHTML=ks.map(k=>`<div class="row"><span>${names[k]}</span><b>${t[k]}</b></div>`).join("");
+    const now=d.getHours()*60+d.getMinutes();
+    let n=null;
+    for(const k of ["Fajr","Dhuhr","Asr","Maghrib","Isha"]){
+      const [hh,mm]=t[k].split(":").map(Number);
+      if(hh*60+mm>now){n=[names[k],t[k]];break}
+    }
+    document.getElementById("next").textContent=n?`Prochaine prière : ${n[0]} à ${n[1]} ♡`:"Toutes les prières sont passées pour aujourd'hui.";
+  }catch(e){
+    document.getElementById("prayers").textContent="Horaires indisponibles";
+    document.getElementById("next").textContent="Impossible d'actualiser les horaires";
+  }
+}
+
+function loadPersonal(){
+  document.querySelectorAll(".editable[data-key]").forEach(el=>{
+    const v=storageGet("dash-"+el.dataset.key);
+    if(v!==null) el.innerHTML=v;
+  });
+  document.querySelectorAll("[data-task]").forEach(x=>{
+    x.checked=storageGet("task-"+x.dataset.task)==="true";
+  });
+  document.querySelectorAll("[data-care]").forEach(x=>{
+    const input=x.querySelector("input");
+    input.checked=storageGet("care-"+x.dataset.care)==="true";
+  });
+}
+
+function savePersonal(el){
+  storageSet("dash-"+el.dataset.key,el.innerHTML);
+  saveState.textContent="✓ Enregistré sur cet iPad";
+  clearTimeout(window.saveTimer);
+  window.saveTimer=setTimeout(()=>saveState.textContent="",1800);
+}
+
+function enableEditing(){
+  app.classList.add("editing");
+  document.querySelectorAll(".editable[data-key]").forEach(el=>{
+    el.contentEditable="true";
+    el.oninput=()=>savePersonal(el);
+  });
+  document.getElementById("editBtn").textContent="✓ Terminer";
+  document.getElementById("editBtn").classList.add("secondary");
+  saveState.textContent="Mode modification : touche un texte pour l'écrire à ta façon.";
+}
+
+function disableEditing(){
+  app.classList.remove("editing");
+  document.querySelectorAll(".editable[data-key]").forEach(el=>el.contentEditable="false");
+  document.getElementById("editBtn").textContent="✎ Modifier";
+  document.getElementById("editBtn").classList.remove("secondary");
+  saveState.textContent="✓ Tes modifications sont enregistrées";
+}
+
+document.getElementById("editBtn").addEventListener("click",()=>{
+  app.classList.contains("editing")?disableEditing():enableEditing();
+});
+document.getElementById("refreshBtn").addEventListener("click",()=>{
+  clock();weather();prayers();
+});
+document.querySelectorAll("[data-task]").forEach(x=>{
+  x.addEventListener("change",()=>storageSet("task-"+x.dataset.task,x.checked));
+});
 document.querySelectorAll("[data-care]").forEach(x=>{
   const input=x.querySelector("input");
-  const key="care-"+x.dataset.care;
-  input.checked=localStorage.getItem(key)==="true";
-  x.classList.toggle("selected",input.checked);
   input.addEventListener("change",()=>{
-    localStorage.setItem(key,input.checked);
+    storageSet("care-"+x.dataset.care,input.checked);
     x.classList.toggle("selected",input.checked);
   });
 });
-loadPersonal();clock();weather();prayers();
+
+loadPersonal();
+clock();
+weather();
+prayers();
 setInterval(clock,1000);
 setInterval(prayers,60000);
 setInterval(weather,600000);
