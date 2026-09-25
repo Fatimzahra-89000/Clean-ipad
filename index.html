@@ -8,9 +8,9 @@
 <meta name="theme-color" content="#ffb7c5">
 <title>My Muslim Pink iPad</title>
 <style>
-:root{--flower:#ffb7c5;--flower-dark:#d98a9b;--flower-soft:#fff0f3;--flower-pale:#fff8fa;--ink:#704b55;--line:#f2cfd6}
+:root{--flower:#ffb7c5;--flower-dark:#d98a9b;--flower-soft:#fff0f3;--flower-pale:#fff8fa;--ink:#704b55;--line:#f2cfd6;--bg1:#fffafb;--bg2:#ffeef2;--bg3:#fff7f9}\nbody.night{--flower:#c9b6e8;--flower-dark:#9b82c4;--flower-soft:#eee8f8;--flower-pale:#f8f5fc;--ink:#625773;--line:#ddd3ed;--bg1:#faf8fd;--bg2:#eee8f7;--bg3:#f7f3fb}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:linear-gradient(135deg,#fffafb,#ffeef2 52%,#fff7f9);font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",sans-serif;color:var(--ink)}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2) 52%,var(--bg3));transition:background .8s,color .8s;font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",sans-serif;color:var(--ink)}
 .page{max-width:1120px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .brand{font-family:Georgia,serif;color:var(--flower-dark);font-size:27px;font-weight:600}.sub{font-size:12px;color:#a87884;margin-top:4px}
 .actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}button{border:1px solid var(--flower);background:var(--flower);color:white;padding:9px 13px;border-radius:18px;font-weight:700;box-shadow:0 6px 18px #ffb7c533;cursor:pointer}button.secondary{background:white;color:var(--flower-dark)}
@@ -35,7 +35,7 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,#fffafb,#ffeef2
 <div class="save-state" id="saveState" aria-live="polite"></div>
 
 <div class="grid">
-<section class="card wide tall"><div class="label editable" data-key="clockLabel">Il est actuellement</div><div class="time" id="clock">--:--</div><div class="date" id="date">—</div><div style="margin-top:13px"><span class="pill" id="greeting">Bonne journée ♡</span></div></section>
+<section class="card wide tall"><div class="label editable" data-key="clockLabel">Il est actuellement</div><div class="time" id="clock">--:--</div><div class="date" id="date">—</div><div style="margin-top:13px"><span class="pill" id="greeting">Bonne journée ♡</span> <span class="pill" id="modePill">Mode journée · rose ♡</span></div></section>
 
 <section class="card tall"><div class="label editable" data-key="weatherLabel">Météo</div><div class="big" id="temp">—</div><div class="date" id="sky">—</div><div class="muted" style="margin-top:13px" id="weatherStatus">Connexion…</div></section>
 
@@ -69,11 +69,11 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,#fffafb,#ffeef2
 </div>
 
 <script>
-const lat=47.7982,lon=3.5738,city="Auxerre";
+const lat=47.7982,lon=3.5738,city="Auxerre";\nlet currentDateKey="";\nfunction autoMode(){const d=new Date(),mins=d.getHours()*60+d.getMinutes(),night=mins>=1200||mins<450;document.body.classList.toggle("night",night);document.querySelector("meta[name=theme-color]").setAttribute("content",night?"#c9b6e8":"#ffb7c5");document.getElementById("modePill")?.replaceChildren(document.createTextNode(night?"Mode nuit · violet pastel ♡":"Mode journée · rose ♡"));}\nfunction autoDailyReset(d){const key=d.toLocaleDateString("fr-CA");if(currentDateKey===key)return;currentDateKey=key;const last=localStorage.getItem("dashboard-day");if(last!==key){["cours","revision","pause"].forEach(k=>localStorage.removeItem("task-"+k));localStorage.setItem("dashboard-day",key);document.querySelectorAll("[data-task]").forEach(x=>x.checked=false);}}
 const names={Fajr:"Fajr",Sunrise:"Chorouq",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"};
 const app=document.getElementById("app"),saveState=document.getElementById("saveState");
 
-function clock(){const d=new Date(),h=d.getHours();document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});document.getElementById("weekday").textContent=d.toLocaleDateString("fr-FR",{weekday:"long"});document.getElementById("greeting").textContent=h<12?"Bonjour ♡":h<18?"Bon après-midi ♡":"Bonne soirée ♡";dayProgress(d)}
+function clock(){const d=new Date(),h=d.getHours();autoMode();autoDailyReset(d);document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});document.getElementById("weekday").textContent=d.toLocaleDateString("fr-FR",{weekday:"long"});document.getElementById("greeting").textContent=h<12?"Bonjour ♡":h<18?"Bon après-midi ♡":"Bonne soirée ♡";dayProgress(d)}
 function dayProgress(d){const sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds(),p=Math.round(sec/86400*100),remain=86400-sec,h=Math.floor(remain/3600),m=Math.floor(remain%3600/60);document.getElementById("dayProgress").textContent=p+" %";document.getElementById("dayRemaining").textContent="Il reste "+h+" h "+m+" min avant minuit";document.getElementById("dayFill").style.width=p+"%"}
 async function weather(){try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Europe%2FParis`),x=await r.json(),c={0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",61:"🌧️",63:"🌧️",65:"🌧️",71:"❄️",80:"🌦️",95:"⛈️"};document.getElementById("temp").textContent=Math.round(x.current.temperature_2m)+" °C";document.getElementById("sky").textContent=city+" · maintenant";document.getElementById("weatherStatus").textContent=(c[x.current.weather_code]||"♡")+"  conditions actuelles"}catch(e){document.getElementById("sky").textContent=city+" · indisponible";document.getElementById("weatherStatus").textContent="Connexion indisponible"}}
 async function prayers(){try{const d=new Date(),u=`https://api.aladhan.com/v1/timings/${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}?latitude=${lat}&longitude=${lon}&method=2`,x=await(await fetch(u)).json(),t=x.data.timings,ks=["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];document.getElementById("prayers").innerHTML=ks.map(k=>`<div class="row"><span>${names[k]}</span><b>${t[k]}</b></div>`).join("");const now=d.getHours()*60+d.getMinutes();let n=null;for(const k of ["Fajr","Dhuhr","Asr","Maghrib","Isha"]){const [h,m]=t[k].split(":").map(Number);if(h*60+m>now){n=[names[k],t[k]];break}}document.getElementById("next").textContent=n?`Prochaine prière : ${n[0]} à ${n[1]} ♡`:"Toutes les prières sont passées pour aujourd'hui."}catch(e){document.getElementById("prayers").textContent="Connexion nécessaire pour actualiser.";document.getElementById("next").textContent="Horaires temporairement indisponibles"}}
