@@ -8,7 +8,8 @@
 <meta name="theme-color" content="#ffb7c5">
 <title>My Muslim Pink iPad</title>
 <style>
-:root{--flower:#ffb7c5;--flower-dark:#d98a9b;--flower-soft:#fff0f3;--flower-pale:#fff8fa;--ink:#704b55;--line:#f2cfd6;--bg1:#fffafb;--bg2:#ffeef2;--bg3:#fff7f9}\nbody.night{--flower:#c9b6e8;--flower-dark:#9b82c4;--flower-soft:#eee8f8;--flower-pale:#f8f5fc;--ink:#625773;--line:#ddd3ed;--bg1:#faf8fd;--bg2:#eee8f7;--bg3:#f7f3fb}
+:root{--flower:#ffb7c5;--flower-dark:#d98a9b;--flower-soft:#fff0f3;--flower-pale:#fff8fa;--ink:#704b55;--line:#f2cfd6;--bg1:#fffafb;--bg2:#ffeef2;--bg3:#fff7f9}
+body.night{--flower:#c9b6e8;--flower-dark:#9b82c4;--flower-soft:#eee8f8;--flower-pale:#f8f5fc;--ink:#625773;--line:#ddd3ed;--bg1:#faf8fd;--bg2:#eee8f7;--bg3:#f7f3fb}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(--bg2) 52%,var(--bg3));transition:background .8s,color .8s;font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",sans-serif;color:var(--ink)}
 .page{max-width:1120px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
@@ -69,7 +70,10 @@ body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg1),var(
 </div>
 
 <script>
-const lat=47.7982,lon=3.5738,city="Auxerre";\nlet currentDateKey="";\nfunction autoMode(){const d=new Date(),mins=d.getHours()*60+d.getMinutes(),night=mins>=1200||mins<450;document.body.classList.toggle("night",night);document.querySelector("meta[name=theme-color]").setAttribute("content",night?"#c9b6e8":"#ffb7c5");document.getElementById("modePill")?.replaceChildren(document.createTextNode(night?"Mode nuit · violet pastel ♡":"Mode journée · rose ♡"));}\nfunction autoDailyReset(d){const key=d.toLocaleDateString("fr-CA");if(currentDateKey===key)return;currentDateKey=key;const last=localStorage.getItem("dashboard-day");if(last!==key){["cours","revision","pause"].forEach(k=>localStorage.removeItem("task-"+k));localStorage.setItem("dashboard-day",key);document.querySelectorAll("[data-task]").forEach(x=>x.checked=false);}}
+const lat=47.7982,lon=3.5738,city="Auxerre";
+let currentDateKey="";
+function autoMode(){const d=new Date(),mins=d.getHours()*60+d.getMinutes(),night=mins>=1200||mins<450;document.body.classList.toggle("night",night);document.querySelector("meta[name=theme-color]").setAttribute("content",night?"#c9b6e8":"#ffb7c5");document.getElementById("modePill")?.replaceChildren(document.createTextNode(night?"Mode nuit · violet pastel ♡":"Mode journée · rose ♡"));}
+function autoDailyReset(d){const key=d.toLocaleDateString("fr-CA");if(currentDateKey===key)return;currentDateKey=key;const last=localStorage.getItem("dashboard-day");if(last!==key){["cours","revision","pause"].forEach(k=>localStorage.removeItem("task-"+k));localStorage.setItem("dashboard-day",key);document.querySelectorAll("[data-task]").forEach(x=>x.checked=false);}}
 const names={Fajr:"Fajr",Sunrise:"Chorouq",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"};
 const app=document.getElementById("app"),saveState=document.getElementById("saveState");
 
