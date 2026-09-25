@@ -5,40 +5,37 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#f3b8c9">
+<meta name="theme-color" content="#ffb7c5">
 <title>My Muslim Pink iPad</title>
 <style>
 :root{
-  --pink:#f3b8c9;--pink2:#e99ab2;--deep:#8e4058;--soft:#fde8ef;
-  --cream:#fffaf7;--ink:#694b54;--line:#efd3dc;--gold:#b4876e;
+ --flower:#ffb7c5;--flower-dark:#d98a9b;--flower-soft:#fff0f3;--flower-pale:#fff8fa;
+ --ink:#704b55;--line:#f2cfd6;--white:#fffdfd;
 }
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:
-radial-gradient(circle at 10% 5%,#fff 0 10%,transparent 28%),
-linear-gradient(135deg,#f9dce5 0%,#fff8f5 48%,#f4cbd8 100%);
-font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",sans-serif;color:var(--ink)}
-.page{max-width:1080px;margin:auto;padding:20px}
-.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
-.brand{font-family:Georgia,serif;color:var(--deep);font-size:26px;font-weight:600}
-.sub{font-size:12px;color:#9b747f;margin-top:3px}
-button{border:0;background:var(--deep);color:#fff;padding:9px 14px;border-radius:16px;font-weight:700;box-shadow:0 5px 14px #8e405824}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#fffafb,#ffeef2 52%,#fff7f9);font-family:-apple-system,BlinkMacSystemFont,"Avenir Next",sans-serif;color:var(--ink)}
+.page{max-width:1120px;margin:auto;padding:20px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{font-family:Georgia,serif;color:var(--flower-dark);font-size:27px;font-weight:600}
+.sub{font-size:12px;color:#a87884;margin-top:4px}
+button{border:1px solid var(--flower);background:var(--flower);color:white;padding:9px 14px;border-radius:18px;font-weight:700;box-shadow:0 6px 18px #ffb7c533}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.card{background:rgba(255,250,247,.88);border:1px solid rgba(255,255,255,.9);border-radius:26px;padding:17px;box-shadow:0 10px 30px #a8566b1a;backdrop-filter:blur(10px)}
-.wide{grid-column:span 2}.tall{min-height:158px}
-.label{font-size:10px;text-transform:uppercase;letter-spacing:1.7px;color:var(--gold);font-weight:800}
-.time{font:58px/1 Georgia,serif;color:var(--deep);margin-top:8px}
-.date{margin-top:7px;color:#9b747f;text-transform:capitalize;font-size:13px}
-.big{font-size:28px;color:var(--deep);margin-top:8px;font-weight:700}
-.muted{font-size:12px;color:#a27b86}
-.pill{display:inline-block;background:var(--soft);color:var(--deep);border-radius:999px;padding:6px 9px;font-size:11px;font-weight:700}
-.rows{margin-top:7px}.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}.row:last-child{border:0}
-.row b{color:var(--deep)}
-.next{margin-top:8px;background:var(--soft);border-radius:14px;padding:8px;font-size:12px;color:var(--deep);font-weight:700}
-.arabic{text-align:center;font:34px Georgia,serif;color:var(--deep);margin:6px 0 3px}
-.quote{text-align:center;font:15px/1.5 Georgia,serif;color:#76525d}
-.bar{height:8px;background:#f8dce5;border-radius:20px;overflow:hidden;margin-top:11px}.fill{height:100%;width:0;background:var(--pink2);border-radius:20px}
-.checks{margin-top:8px}.check{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px}.check input{accent-color:var(--pink2);width:16px;height:16px}
-.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mini{background:#fff1f5;border-radius:14px;padding:9px;text-align:center}.mini strong{display:block;color:var(--deep);font-size:16px}.mini span{font-size:10px;color:#a27b86}
+.card{background:rgba(255,253,253,.92);border:1px solid var(--line);border-radius:25px;padding:17px;box-shadow:0 10px 28px #c77b8c18}
+.wide{grid-column:span 2}.tall{min-height:164px}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:1.7px;color:var(--flower-dark);font-weight:800}
+.time{font:58px/1 Georgia,serif;color:var(--flower-dark);margin-top:8px}
+.date{margin-top:7px;color:#a87884;text-transform:capitalize;font-size:13px}
+.big{font-size:28px;color:var(--flower-dark);margin-top:8px;font-weight:700}
+.muted{font-size:12px;color:#a87884}
+.pill{display:inline-block;background:var(--flower-soft);color:var(--flower-dark);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:11px;font-weight:700}
+.rows{margin-top:7px}.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}.row:last-child{border:0}.row b{color:var(--flower-dark)}
+.next{margin-top:8px;background:var(--flower-soft);border:1px solid var(--line);border-radius:14px;padding:9px;font-size:12px;color:var(--flower-dark);font-weight:700}
+.arabic{text-align:center;font:34px Georgia,serif;color:var(--flower-dark);margin:6px 0 3px}
+.quote{text-align:center;font:15px/1.5 Georgia,serif;color:#76535d}
+.bar{height:8px;background:#fde1e7;border-radius:20px;overflow:hidden;margin-top:11px}.fill{height:100%;width:0;background:var(--flower);border-radius:20px}
+.checks{margin-top:8px}.check{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px}.check input{accent-color:var(--flower);width:16px;height:16px}
+.agenda{margin-top:9px;display:grid;gap:7px}.event{display:flex;gap:9px;align-items:center;background:var(--flower-pale);border:1px solid var(--line);border-radius:13px;padding:8px 9px;font-size:12px}.event b{color:var(--flower-dark);min-width:42px}
+.selfcare{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.care{background:var(--flower-soft);border:1px solid var(--line);border-radius:13px;padding:9px;text-align:center;font-size:11px}.care span{display:block;font-size:19px;margin-bottom:3px}
 .refresh{cursor:pointer}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2}}
 @media(max-width:500px){.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.page{padding:12px}.brand{font-size:23px}}
@@ -46,89 +43,93 @@ button{border:0;background:var(--deep);color:#fff;padding:9px 14px;border-radius
 </head>
 <body>
 <div class="page">
-  <div class="top">
-    <div><div class="brand">My Muslim Pink iPad ♡</div><div class="sub">clean • soft • organized • الحمد لله</div></div>
-    <button class="refresh" onclick="refresh()">↻ Actualiser</button>
-  </div>
-
-  <div class="grid">
-    <section class="card wide tall">
-      <div class="label">Il est actuellement</div>
-      <div class="time" id="clock">--:--</div>
-      <div class="date" id="date">—</div>
-      <div style="margin-top:13px"><span class="pill" id="greeting">Bonne journée ♡</span></div>
-    </section>
-
-    <section class="card tall">
-      <div class="label">Météo</div>
-      <div class="big" id="temp">—</div>
-      <div class="date" id="sky">Auxerre · —</div>
-      <div class="mini-grid">
-        <div class="mini"><strong id="weatherStatus">—</strong><span>maintenant</span></div>
-        <div class="mini"><strong id="today">—</strong><span>aujourd'hui</span></div>
-      </div>
-    </section>
-
-    <section class="card tall">
-      <div class="label">Ma journée</div>
-      <div class="big" id="dayProgress">—</div>
-      <div class="muted" id="dayRemaining">Calcul…</div>
-      <div class="bar"><div class="fill" id="dayFill"></div></div>
-      <div class="muted" style="margin-top:9px">Une petite étape à la fois ♡</div>
-    </section>
-
-    <section class="card wide tall">
-      <div class="label">Aujourd'hui · الصلاة</div>
-      <div class="rows" id="prayers">Chargement…</div>
-      <div class="next" id="next">Prochaine prière : —</div>
-    </section>
-
-    <section class="card tall">
-      <div class="label">Petit rappel</div>
-      <div class="arabic">الحمد لله</div>
-      <div class="quote">« Avec la difficulté vient certes la facilité. »</div>
-      <div class="muted" style="text-align:center;margin-top:8px">Coran · 94:6</div>
-    </section>
-
-    <section class="card wide tall">
-      <div class="label">Mon focus du jour</div>
-      <div class="big" style="font-size:22px">Une journée simple & productive</div>
-      <div class="checks">
-        <label class="check"><input type="checkbox" data-task="cours"> 📚 Cours / devoirs</label>
-        <label class="check"><input type="checkbox" data-task="priere"> 🕌 Mes prières</label>
-        <label class="check"><input type="checkbox" data-task="pause"> 🌷 Une vraie pause</label>
-      </div>
-    </section>
-
-    <section class="card tall">
-      <div class="label">Aujourd'hui</div>
-      <div class="big" id="weekday">—</div>
-      <div class="date">Prends ton temps, avance à ton rythme ♡</div>
-    </section>
-
-    <section class="card tall">
-      <div class="label">Pour mon cœur</div>
-      <div class="quote" style="margin-top:13px">Qu'Allah mette de la baraka dans ta journée et tes efforts.</div>
-      <div style="text-align:center;margin-top:12px"><span class="pill">بِسْمِ الله ♡</span></div>
-    </section>
-  </div>
+<div class="top">
+ <div><div class="brand">My Muslim Pink iPad ♡</div><div class="sub">soft • clean • organized • الحمد لله</div></div>
+ <button class="refresh" onclick="refresh()">↻ Actualiser</button>
 </div>
+<div class="grid">
+
+<section class="card wide tall">
+ <div class="label">Il est actuellement</div><div class="time" id="clock">--:--</div><div class="date" id="date">—</div>
+ <div style="margin-top:13px"><span class="pill" id="greeting">Bonne journée ♡</span></div>
+</section>
+
+<section class="card tall">
+ <div class="label">Météo</div><div class="big" id="temp">—</div><div class="date" id="sky">—</div>
+ <div class="muted" style="margin-top:13px" id="weatherStatus">Connexion…</div>
+</section>
+
+<section class="card tall">
+ <div class="label">Mon rythme</div><div class="big" id="dayProgress">—</div><div class="muted" id="dayRemaining">Calcul…</div>
+ <div class="bar"><div class="fill" id="dayFill"></div></div>
+ <div class="muted" style="margin-top:9px">Pas besoin de tout faire d'un coup ♡</div>
+</section>
+
+<section class="card wide tall">
+ <div class="label">Aujourd'hui · الصلاة</div>
+ <div class="rows" id="prayers">Chargement…</div><div class="next" id="next">Prochaine prière : —</div>
+</section>
+
+<section class="card tall">
+ <div class="label">Petit rappel</div><div class="arabic">الحمد لله</div>
+ <div class="quote">« Avec la difficulté vient certes la facilité. »</div>
+ <div class="muted" style="text-align:center;margin-top:8px">Coran · 94:6</div>
+</section>
+
+<section class="card wide tall">
+ <div class="label">Études · mon focus</div><div class="big" style="font-size:21px">Aujourd'hui, je me concentre sur…</div>
+ <div class="checks">
+  <label class="check"><input type="checkbox" data-task="cours"> 📚 Cours / devoirs</label>
+  <label class="check"><input type="checkbox" data-task="revision"> ✏️ Révisions</label>
+  <label class="check"><input type="checkbox" data-task="pause"> 🌸 Une vraie pause</label>
+ </div>
+</section>
+
+<section class="card wide tall">
+ <div class="label">Mon agenda</div>
+ <div class="agenda">
+  <div class="event"><b>MATIN</b><span>Relire mes cours ♡</span></div>
+  <div class="event"><b>APRÈS-MIDI</b><span>Devoirs / révisions</span></div>
+  <div class="event"><b>SOIR</b><span>Préparer demain</span></div>
+ </div>
+</section>
+
+<section class="card tall">
+ <div class="label">Self-care</div>
+ <div class="selfcare">
+  <div class="care"><span>🕌</span>Prière</div><div class="care"><span>💧</span>Boire</div>
+  <div class="care"><span>🌸</span>Pause</div><div class="care"><span>🤍</span>Respirer</div>
+ </div>
+</section>
+
+<section class="card tall">
+ <div class="label">Aujourd'hui</div><div class="big" id="weekday">—</div>
+ <div class="date">Prends ton temps, avance à ton rythme ♡</div>
+</section>
+
+<section class="card tall">
+ <div class="label">Pour mon cœur</div>
+ <div class="quote" style="margin-top:13px">Qu'Allah mette de la baraka dans ta journée et tes efforts.</div>
+ <div style="text-align:center;margin-top:12px"><span class="pill">بِسْمِ الله ♡</span></div>
+</section>
+
+</div></div>
 
 <script>
-const lat=47.7982,lon=3.5738;
+/* Ville utilisée pour météo et prières : à modifier si besoin */
+const lat=47.7982,lon=3.5738,city="Auxerre";
 const names={Fajr:"Fajr",Sunrise:"Chorouq",Dhuhr:"Dhuhr",Asr:"Asr",Maghrib:"Maghrib",Isha:"Isha"};
 
 function clock(){
  const d=new Date(),h=d.getHours();
  document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
  document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
- document.getElementById("today").textContent=d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
  document.getElementById("weekday").textContent=d.toLocaleDateString("fr-FR",{weekday:"long"});
  document.getElementById("greeting").textContent=h<12?"Bonjour ♡":h<18?"Bon après-midi ♡":"Bonne soirée ♡";
  dayProgress(d);
 }
 function dayProgress(d){
- const sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds(),total=86400,p=Math.round(sec/total*100),remain=total-sec;
+ const sec=d.getHours()*3600+d.getMinutes()*60+d.getSeconds(),p=Math.round(sec/86400*100),remain=86400-sec;
  const h=Math.floor(remain/3600),m=Math.floor((remain%3600)/60);
  document.getElementById("dayProgress").textContent=p+" %";
  document.getElementById("dayRemaining").textContent="Il reste "+h+" h "+m+" min avant minuit";
@@ -139,12 +140,9 @@ async function weather(){
   const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Europe%2FParis`);
   const x=await r.json(),c={0:"☀️",1:"🌤️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",61:"🌧️",63:"🌧️",65:"🌧️",71:"❄️",80:"🌦️",95:"⛈️"};
   document.getElementById("temp").textContent=Math.round(x.current.temperature_2m)+" °C";
-  document.getElementById("sky").textContent="Auxerre · conditions actuelles";
-  document.getElementById("weatherStatus").textContent=c[x.current.weather_code]||"♡";
- }catch(e){
-  document.getElementById("sky").textContent="Auxerre · indisponible";
-  document.getElementById("weatherStatus").textContent="—";
- }
+  document.getElementById("sky").textContent=city+" · maintenant";
+  document.getElementById("weatherStatus").textContent=(c[x.current.weather_code]||"♡")+"  conditions actuelles";
+ }catch(e){document.getElementById("sky").textContent=city+" · indisponible";document.getElementById("weatherStatus").textContent="Connexion indisponible";}
 }
 async function prayers(){
  try{
@@ -152,24 +150,15 @@ async function prayers(){
   const x=await (await fetch(u)).json(),t=x.data.timings,ks=["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
   document.getElementById("prayers").innerHTML=ks.map(k=>`<div class="row"><span>${names[k]}</span><b>${t[k]}</b></div>`).join("");
   const now=d.getHours()*60+d.getMinutes();let n=null;
-  for(const k of ["Fajr","Dhuhr","Asr","Maghrib","Isha"]){
-   const [h,m]=t[k].split(":").map(Number);
-   if(h*60+m>now){n=[names[k],t[k]];break}
-  }
+  for(const k of ["Fajr","Dhuhr","Asr","Maghrib","Isha"]){const [h,m]=t[k].split(":").map(Number);if(h*60+m>now){n=[names[k],t[k]];break}}
   document.getElementById("next").textContent=n?`Prochaine prière : ${n[0]} à ${n[1]} ♡`:"Toutes les prières sont passées pour aujourd'hui.";
- }catch(e){
-  document.getElementById("prayers").textContent="Connexion nécessaire pour actualiser.";
-  document.getElementById("next").textContent="Horaires temporairement indisponibles";
- }
+ }catch(e){document.getElementById("prayers").textContent="Connexion nécessaire pour actualiser.";document.getElementById("next").textContent="Horaires temporairement indisponibles";}
 }
-function saveTasks(){
- document.querySelectorAll("[data-task]").forEach(x=>localStorage.setItem("task-"+x.dataset.task,x.checked));
-}
-function loadTasks(){
- document.querySelectorAll("[data-task]").forEach(x=>{x.checked=localStorage.getItem("task-"+x.dataset.task)==="true";x.addEventListener("change",saveTasks)});
-}
+function saveTasks(){document.querySelectorAll("[data-task]").forEach(x=>localStorage.setItem("task-"+x.dataset.task,x.checked))}
+function loadTasks(){document.querySelectorAll("[data-task]").forEach(x=>{x.checked=localStorage.getItem("task-"+x.dataset.task)==="true";x.addEventListener("change",saveTasks)})}
 function refresh(){clock();weather();prayers()}
 clock();weather();prayers();loadTasks();
+setInterval(clock,1000);
 </script>
 </body>
 </html>
