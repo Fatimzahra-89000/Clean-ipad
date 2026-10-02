@@ -22,14 +22,14 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
 .months{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
 .actions{display:flex;gap:7px;flex-wrap:wrap}.small{font-size:11px;padding:7px 10px}
 @media(max-width:850px){.layout,.columns{grid-template-columns:1fr}.sidebar{order:2}.app{padding:12px}.date-title{font-size:20px}.months{grid-template-columns:repeat(3,1fr)}}
- .iman-wrap{margin:0 0 15px;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#fbeaf2;box-shadow:var(--shadow)}.iman-wrap img{display:block;width:100%;max-height:250px;object-fit:cover;object-position:center}.iman-caption{text-align:center;font-size:11px;color:var(--muted);padding:7px;background:#fffafd}</style></head>
+ .iman-wrap{margin:14px auto 0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fbeaf2;box-shadow:var(--shadow);width:100%;max-width:190px}.iman-wrap img{display:block;width:190px;height:190px;max-width:100%;object-fit:cover;object-position:center}.iman-caption{text-align:center;font-size:10px;color:var(--muted);padding:6px 4px;background:#fffafd}</style></head>
 <body><div class="app">
-<div class="iman-wrap"><img src="inspiration.gif" alt="Inspiration islamique rose avec nœuds"><div class="iman-caption">♡ une petite inspiration qui défile automatiquement ♡</div></div><div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
+<div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
 <div class="actions"><button class="pill" id="prev">‹</button><button class="pill" id="today">Aujourd'hui</button><button class="pill" id="next">›</button></div></div>
 <div class="nav" id="monthNav"></div>
 <div class="layout"><aside class="card sidebar">
 <div class="calendar-head"><button class="pill small" id="mPrev">‹</button><div class="month-title" id="calTitle"></div><button class="pill small" id="mNext">›</button></div>
-<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div>
+<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div><div class="iman-wrap"><img src="inspiration.gif" alt="Inspiration islamique rose avec nœuds"><div class="iman-caption">♡ inspiration ♡</div></div>
 </aside><main>
 <div class="card priority"><div class="main-head"><div><div class="date-title" id="dateTitle"></div><div class="date-small" id="dateSmall"></div></div><button class="pill" id="clearDay">Effacer la journée</button></div>
 <div style="font-size:12px;font-weight:700;color:var(--pink)">PRIORITÉ DU JOUR ♡</div><input class="inputline" id="priority" placeholder="Ce qui compte vraiment aujourd'hui…"></div>
