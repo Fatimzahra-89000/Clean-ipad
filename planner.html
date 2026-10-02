@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>My Digital Agenda • 2026/2027</title>
+<style>
+:root{--bg:#fff8fb;--paper:#fffdfd;--pink:#d98fa7;--rose:#f3d9e2;--deep:#704f5d;--muted:#aa8c98;--line:#ead1da;--shadow:0 10px 30px #8b5b6b18}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff9fb,#fdf0f5);color:var(--deep);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app{max-width:1200px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
+.brand{font-weight:800;font-size:22px;color:var(--pink)}.sub{font-size:12px;color:var(--muted)}.nav{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:#fff;border:1px solid var(--line);color:var(--deep);border-radius:999px;padding:9px 13px}.pill.active,.pill:hover{background:var(--rose)}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:16px}.card{background:rgba(255,253,253,.92);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:17px}
+.sidebar h3,.section-title{margin:0 0 10px;color:var(--pink)}.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.month-title{font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dow{font-size:10px;text-align:center;color:var(--muted);padding:4px}.day{min-height:34px;border-radius:10px;background:#fff;border:1px solid transparent;color:var(--deep)}.day:hover{background:var(--rose)}.day.today{border-color:var(--pink)}.day.sel{background:var(--pink);color:#fff}.day.empty{background:transparent}
+.main-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.date-title{font-size:24px;font-weight:800;color:var(--pink)}.date-small{font-size:12px;color:var(--muted)}
+.columns{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}.box h4{margin:0 0 10px;color:var(--pink)}
+.priority{background:linear-gradient(90deg,#f9e5ec,#fff)}.inputline{width:100%;border:0;border-bottom:1px solid var(--line);padding:8px 2px;background:transparent;color:var(--deep);outline:0}
+.tasks{display:grid;gap:8px}.task{display:flex;gap:8px;align-items:center}.task input[type=text]{flex:1;border:0;border-bottom:1px solid #f0dfe5;padding:7px;background:transparent;outline:0}
+.schedule{display:grid;grid-template-columns:48px 1fr}.hour{font-size:11px;color:var(--muted);padding:8px 5px;border-bottom:1px dashed var(--line)}.slot{min-height:31px;border-bottom:1px dashed var(--line);outline:0;padding:7px}
+.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{padding:9px 5px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:11px;background:#fff}.prayer.on{background:var(--rose);border-color:var(--pink)}
+.checkrow{display:flex;gap:8px;flex-wrap:wrap}.checkchip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:11px}.checkchip.on{background:var(--rose);border-color:var(--pink)}
+textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:vertical;outline:0;background:#fff;color:var(--deep)}
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
+.actions{display:flex;gap:7px;flex-wrap:wrap}.small{font-size:11px;padding:7px 10px}
+@media(max-width:850px){.layout,.columns{grid-template-columns:1fr}.sidebar{order:2}.app{padding:12px}.date-title{font-size:20px}.months{grid-template-columns:repeat(3,1fr)}}
+</style></head>
+<body><div class="app">
+<div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
+<div class="actions"><button class="pill" id="prev">‹</button><button class="pill" id="today">Aujourd'hui</button><button class="pill" id="next">›</button></div></div>
+<div class="nav" id="monthNav"></div>
+<div class="layout"><aside class="card sidebar">
+<div class="calendar-head"><button class="pill small" id="mPrev">‹</button><div class="month-title" id="calTitle"></div><button class="pill small" id="mNext">›</button></div>
+<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div>
+</aside><main>
+<div class="card priority"><div class="main-head"><div><div class="date-title" id="dateTitle"></div><div class="date-small" id="dateSmall"></div></div><button class="pill" id="clearDay">Effacer la journée</button></div>
+<div style="font-size:12px;font-weight:700;color:var(--pink)">PRIORITÉ DU JOUR ♡</div><input class="inputline" id="priority" placeholder="Ce qui compte vraiment aujourd'hui…"></div>
+<div class="columns"><div>
+<div class="box"><h4>♡ MON AGENDA</h4><div class="schedule" id="schedule"></div></div>
+<div class="box"><h4>♡ ÉTUDES / RÉVISIONS</h4><div class="tasks" id="study"></div></div></div>
+<div>
+<div class="box"><h4>♡ TO DO</h4><div class="tasks" id="todo"></div></div>
+<div class="box"><h4>♡ PRIÈRES</h4><div class="prayers" id="prayers"></div></div>
+<div class="box"><h4>♡ MES HABITUDES</h4><div class="checkrow" id="habits"></div></div>
+<div class="box"><h4>♡ REPAS DU JOUR</h4><input class="inputline" id="breakfast" placeholder="Petit-déjeuner"><input class="inputline" id="lunch" placeholder="Déjeuner"><input class="inputline" id="dinner" placeholder="Dîner"></div>
+<div class="box"><h4>♡ GRATITUDE / NOTES</h4><textarea id="notes" placeholder="Une pensée, une idée, quelque chose dont tu es reconnaissante…"></textarea></div>
+</div></div></main></div></div>
+<script>
+const start=new Date(2026,8,1), end=new Date(2027,7,31);
+const names=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+const days=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+let selected=new Date(), calMonth=new Date();
+if(selected<start)selected=new Date(start); if(selected>end)selected=new Date(end); calMonth=new Date(selected.getFullYear(),selected.getMonth(),1);
+const key=d=>d.toISOString().slice(0,10);
+const load=k=>{try{return JSON.parse(localStorage.getItem("agenda:"+k))||null}catch(e){return null}};
+const store=(k,v)=>localStorage.setItem("agenda:"+k,JSON.stringify(v));
+const fresh=()=>({priority:"",slots:{},todo:Array(6).fill(""),study:Array(3).fill(""),prayers:[0,0,0,0,0],habits:[0,0,0,0],meal:["","",""],notes:""});
+const dayData=()=>load(key(selected))||fresh();
+function monthLabel(d){return names[d.getMonth()]+" "+d.getFullYear()}
+function goMonth(y,m){calMonth=new Date(y,m,1);renderCalendar();renderNav()}
+function setDay(d){if(d<start||d>end)return;selected=new Date(d);calMonth=new Date(d.getFullYear(),d.getMonth(),1);renderAll()}
+function renderNav(){
+ let s=""; for(let i=0;i<12;i++){let y=i<4?2026:2027,m=i<4?8+i:i-4; s+='<button class="pill '+(m==calMonth.getMonth()&&y==calMonth.getFullYear()?'active':'')+'" onclick="goMonth('+y+','+m+')">'+names[m]+'</button>'}
+ document.getElementById("monthNav").innerHTML=s;
+}
+function renderCalendar(){
+ document.getElementById("calTitle").textContent=monthLabel(calMonth);
+ const el=document.getElementById("calendar"); let s=days.map(x=>'<div class="dow">'+x+'</div>').join("");
+ let first=(calMonth.getDay()+6)%7,total=new Date(calMonth.getFullYear(),calMonth.getMonth()+1,0).getDate();
+ for(let i=0;i<first;i++)s+='<button class="day empty"></button>';
+ for(let n=1;n<=total;n++){let d=new Date(calMonth.getFullYear(),calMonth.getMonth(),n),valid=d>=start&&d<=end;
+   s+=valid?'<button class="day '+(key(d)==key(selected)?'sel ':'')+(key(d)==key(new Date())?'today':'')+'" onclick="setDay(new Date('+d.getFullYear()+','+d.getMonth()+','+n+'))">'+n+'</button>':'<button class="day" disabled>'+n+'</button>'}
+ el.innerHTML=s;
+ let ms=""; for(let i=0;i<12;i++){let y=i<4?2026:2027,m=i<4?8+i:i-4;ms+='<button class="month-btn" onclick="goMonth('+y+','+m+')">'+names[m]+'</button>'} document.getElementById("months").innerHTML=ms;
+}
+function renderList(id,arr,type){
+ let el=document.getElementById(id),s=""; for(let i=0;i<arr.length;i++)s+='<div class="task"><input type="checkbox"><input type="text" value="'+String(arr[i]||"").replace(/"/g,"&quot;")+'" placeholder="'+(type=="study"?"Matière / devoir / révision":"À faire…")+'"></div>';
+ el.innerHTML=s; let inputs=el.querySelectorAll('input[type="text"]'); inputs.forEach((inp,i)=>inp.oninput=()=>{let d=dayData();d[type][i]=inp.value;store(key(selected),d)});
+}
+function renderSchedule(d){
+ let el=document.getElementById("schedule"),s=""; for(let h=7;h<=22;h++)s+='<div class="hour">'+String(h).padStart(2,"0")+'h</div><div class="slot" contenteditable="true" data-h="'+h+'">'+(d.slots[h]||"")+'</div>';
+ el.innerHTML=s; el.querySelectorAll(".slot").forEach(x=>x.oninput=()=>{let d2=dayData();d2.slots[x.dataset.h]=x.textContent;store(key(selected),d2)});
+}
+function renderAll(){
+ let d=dayData(); document.getElementById("dateTitle").textContent=selected.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+ document.getElementById("dateSmall").textContent=selected.toLocaleDateString("fr-FR")+" • "+monthLabel(selected);
+ let pr=document.getElementById("priority");pr.value=d.priority;pr.oninput=()=>{d.priority=pr.value;store(key(selected),d)};
+ renderSchedule(d);renderList("todo",d.todo,"todo");renderList("study",d.study,"study");
+ document.getElementById("prayers").innerHTML=["Fajr","Dhuhr","Asr","Maghrib","Isha"].map((x,i)=>'<button class="prayer '+(d.prayers[i]?"on":"")+'" onclick="togglePrayer('+i+')">'+x+'<br>☐</button>').join("");
+ document.getElementById("habits").innerHTML=["Qur'an","Eau","Études","Self-care"].map((x,i)=>'<button class="checkchip '+(d.habits[i]?"on":"")+'" onclick="toggleHabit('+i+')">'+x+' ☐</button>').join("");
+ ["breakfast","lunch","dinner"].forEach((id,i)=>{let e=document.getElementById(id);e.value=d.meal[i]||"";e.oninput=()=>{let x=dayData();x.meal[i]=e.value;store(key(selected),x)}});
+ let n=document.getElementById("notes");n.value=d.notes||"";n.oninput=()=>{let x=dayData();x.notes=n.value;store(key(selected),x)};
+ renderCalendar();renderNav();
+}
+function togglePrayer(i){let d=dayData();d.prayers[i]=d.prayers[i]?0:1;store(key(selected),d);renderAll()}
+function toggleHabit(i){let d=dayData();d.habits[i]=d.habits[i]?0:1;store(key(selected),d);renderAll()}
+document.getElementById("prev").onclick=()=>setDay(new Date(selected.getTime()-86400000));
+document.getElementById("next").onclick=()=>setDay(new Date(selected.getTime()+86400000));
+document.getElementById("today").onclick=()=>{let n=new Date();setDay(n<start?start:n>end?end:n)};
+document.getElementById("mPrev").onclick=()=>{calMonth.setMonth(calMonth.getMonth()-1);renderCalendar();renderNav()};
+document.getElementById("mNext").onclick=()=>{calMonth.setMonth(calMonth.getMonth()+1);renderCalendar();renderNav()};
+document.getElementById("clearDay").onclick=()=>{if(confirm("Effacer toutes les données de cette journée ?")){localStorage.removeItem("agenda:"+key(selected));renderAll()}};
+renderAll();
+</script></body></html>
