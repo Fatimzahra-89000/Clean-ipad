@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>My Digital Agenda • 2026/2027</title>
 <style>
-:root{--bg:#fff8fb;--paper:#fffdfd;--pink:#d98fa7;--rose:#f3d9e2;--deep:#704f5d;--muted:#aa8c98;--line:#ead1da;--shadow:0 10px 30px #8b5b6b18}
+:root{--bg:#fff8fb;--paper:#fffdfd;--pink:#e9a7bd;--rose:#f9dce7;--deep:#795766;--muted:#b18f9d;--line:#f0cfdc;--shadow:0 10px 30px #c78da518}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff9fb,#fdf0f5);color:var(--deep);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .app{max-width:1200px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
 .brand{font-weight:800;font-size:22px;color:var(--pink)}.sub{font-size:12px;color:var(--muted)}.nav{display:flex;gap:8px;flex-wrap:wrap}
@@ -16,10 +16,10 @@
 .priority{background:linear-gradient(90deg,#f9e5ec,#fff)}.inputline{width:100%;border:0;border-bottom:1px solid var(--line);padding:8px 2px;background:transparent;color:var(--deep);outline:0}
 .tasks{display:grid;gap:8px}.task{display:flex;gap:8px;align-items:center}.task input[type=text]{flex:1;border:0;border-bottom:1px solid #f0dfe5;padding:7px;background:transparent;outline:0}
 .schedule{display:grid;grid-template-columns:48px 1fr}.hour{font-size:11px;color:var(--muted);padding:8px 5px;border-bottom:1px dashed var(--line)}.slot{min-height:31px;border-bottom:1px dashed var(--line);outline:0;padding:7px}
-.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{padding:9px 5px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:11px;background:#fff}.prayer.on{background:var(--rose);border-color:var(--pink)}
-.checkrow{display:flex;gap:8px;flex-wrap:wrap}.checkchip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:11px}.checkchip.on{background:var(--rose);border-color:var(--pink)}
+.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{padding:9px 5px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:11px;background:#fff;color:var(--deep);cursor:pointer}.prayer.on{background:var(--rose);border-color:var(--pink)}
+.checkrow{display:flex;gap:8px;flex-wrap:wrap}.checkchip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:11px;color:var(--deep);cursor:pointer}.checkchip.on{background:var(--rose);border-color:var(--pink)}
 textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:vertical;outline:0;background:#fff;color:var(--deep)}
-.months{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
+.months{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
 .actions{display:flex;gap:7px;flex-wrap:wrap}.small{font-size:11px;padding:7px 10px}
 @media(max-width:850px){.layout,.columns{grid-template-columns:1fr}.sidebar{order:2}.app{padding:12px}.date-title{font-size:20px}.months{grid-template-columns:repeat(3,1fr)}}
 </style></head>
@@ -84,8 +84,8 @@ function renderAll(){
  document.getElementById("dateSmall").textContent=selected.toLocaleDateString("fr-FR")+" • "+monthLabel(selected);
  let pr=document.getElementById("priority");pr.value=d.priority;pr.oninput=()=>{d.priority=pr.value;store(key(selected),d)};
  renderSchedule(d);renderList("todo",d.todo,"todo");renderList("study",d.study,"study");
- document.getElementById("prayers").innerHTML=["Fajr","Dhuhr","Asr","Maghrib","Isha"].map((x,i)=>'<button class="prayer '+(d.prayers[i]?"on":"")+'" onclick="togglePrayer('+i+')">'+x+'<br>☐</button>').join("");
- document.getElementById("habits").innerHTML=["Qur'an","Eau","Études","Self-care"].map((x,i)=>'<button class="checkchip '+(d.habits[i]?"on":"")+'" onclick="toggleHabit('+i+')">'+x+' ☐</button>').join("");
+ document.getElementById("prayers").innerHTML=["Fajr","Dhuhr","Asr","Maghrib","Isha"].map((x,i)=>`<button class="prayer ${d.prayers[i]?"on":""}" onclick="togglePrayer(${i})">${x}<br>${d.prayers[i]?"✓":"♡"}</button>`).join("");
+ document.getElementById("habits").innerHTML=[["📖","Qur-\u0061n"],["💧","Eau"],["📚","Études"],["🧴","Self-care"]].map((x,i)=>`<button class="checkchip ${d.habits[i]?"on":""}" onclick="toggleHabit(${i})">${x[0]} ${x[1]} ${d.habits[i]?"✓":"♡"}</button>`).join("");
  ["breakfast","lunch","dinner"].forEach((id,i)=>{let e=document.getElementById(id);e.value=d.meal[i]||"";e.oninput=()=>{let x=dayData();x.meal[i]=e.value;store(key(selected),x)}});
  let n=document.getElementById("notes");n.value=d.notes||"";n.oninput=()=>{let x=dayData();x.notes=n.value;store(key(selected),x)};
  renderCalendar();renderNav();
