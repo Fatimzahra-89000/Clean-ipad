@@ -17,6 +17,21 @@ header{display:flex;justify-content:space-between;align-items:center;gap:15px;ma
 .planner-tab.active{background:var(--accent);color:#fff}
 .planner-tab:hover{background:var(--bg2);color:var(--accent)}
 .planner-tab.active:hover{background:var(--accent);color:#fff}
+.reset-view{display:none}
+.reset-view.show{display:block}
+.reset-hero{padding:22px 24px;margin-bottom:14px}
+.reset-hero h1{margin:0;color:#111;font-size:28px}
+.reset-hero p{margin:8px 0 0;color:var(--muted);font-size:13px;font-weight:600}
+.reset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.reset-card{background:var(--card);border:1px solid rgba(255,255,255,.75);box-shadow:var(--shadow);border-radius:22px;padding:20px}
+.reset-card h2{font-size:17px;margin:0 0 14px;color:#222}
+.reset-list{display:grid;gap:0}
+.reset-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px;font-weight:600;color:#25232b}
+.reset-row:last-child{border-bottom:0}
+.reset-row input{width:22px;height:22px;accent-color:var(--accent)}
+.reset-note{width:100%;min-height:88px;border:1px solid var(--line);border-radius:14px;background:var(--card2);padding:11px;outline:0;color:var(--ink)}
+.reset-save{margin-top:10px;border:0;border-radius:12px;padding:9px 13px;background:var(--accent);color:#fff;font-weight:800}
+@media(max-width:700px){.reset-grid{grid-template-columns:1fr}}
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:14px}.hero-card,.card{background:var(--card);border:1px solid rgba(255,255,255,.7);box-shadow:var(--shadow);backdrop-filter:blur(12px);border-radius:22px}
 .hero-card{padding:18px}.hero-title{font-size:12px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;font-weight:800}.clock{font-size:48px;font-weight:800;color:var(--accent);margin-top:5px}.date{font-size:12px;color:var(--muted);text-transform:capitalize}.arabic{font-family:Georgia,serif;font-size:29px;color:var(--accent);text-align:right}.quote{font-family:Georgia,serif;font-size:13px;line-height:1.5;margin-top:5px}
 .layout{display:grid;grid-template-columns:295px minmax(0,1fr);gap:15px;align-items:start}.sidebar{padding:15px;position:sticky;top:12px}.main{min-width:0}.card{padding:15px;margin-bottom:14px}
@@ -41,8 +56,51 @@ textarea{width:100%;min-height:95px;border:1px solid var(--line);border-radius:1
 <nav class="planner-tabs" aria-label="Navigation du planner">
   <button class="planner-tab active" id="tabToday" onclick="today()">Aujourd’hui</button>
   <button class="planner-tab" id="tabWeek" onclick="weekView()">Ma semaine</button>
-  <button class="planner-tab" id="tabReset" onclick="weeklyReset()">Weekly Reset</button>
+  <button class="planner-tab" id="tabReset" onclick="weekendReset()">Weekend Reset</button>
 </nav>
+<section class="reset-view" id="resetView">
+  <div class="card reset-hero">
+    <h1>Weekly Reset 🫧</h1>
+    <p>Le dimanche : remettre ton espace, tes cours et ton esprit à zéro.</p>
+  </div>
+  <div class="reset-grid">
+    <div class="reset-card">
+      <h2>🛏️ Chambre</h2>
+      <div class="reset-list">
+        <label class="reset-row"><input type="checkbox" data-reset="draps">Draps propres</label>
+        <label class="reset-row"><input type="checkbox" data-reset="chambre">Chambre rangée</label>
+        <label class="reset-row"><input type="checkbox" data-reset="bureau">Bureau clean</label>
+        <label class="reset-row"><input type="checkbox" data-reset="ipad">Cours / iPad rangés</label>
+      </div>
+    </div>
+    <div class="reset-card">
+      <h2>🧴 Beauté reset</h2>
+      <div class="reset-list">
+        <label class="reset-row"><input type="checkbox" data-reset="cheveux">Soin cheveux</label>
+        <label class="reset-row"><input type="checkbox" data-reset="ongles">Ongles</label>
+        <label class="reset-row"><input type="checkbox" data-reset="hydratation">Hydratation corps</label>
+        <label class="reset-row"><input type="checkbox" data-reset="skincare">Skincare complète</label>
+      </div>
+    </div>
+    <div class="reset-card">
+      <h2>🎒 Nouvelle semaine</h2>
+      <div class="reset-list">
+        <label class="reset-row"><input type="checkbox" data-reset="emploi">Vérifier emploi du temps</label>
+        <label class="reset-row"><input type="checkbox" data-reset="controles">Vérifier contrôles / oraux</label>
+        <label class="reset-row"><input type="checkbox" data-reset="affaires">Préparer les affaires</label>
+        <label class="reset-row"><input type="checkbox" data-reset="priorites">Choisir 3 priorités</label>
+      </div>
+    </div>
+    <div class="reset-card">
+      <h2>📖 Lecture & Deen</h2>
+      <div class="reset-list">
+        <label class="reset-row"><input type="checkbox" data-reset="quran">Objectif Coran</label>
+        <label class="reset-row"><input type="checkbox" data-reset="lecture">Lecture personnelle</label>
+      </div>
+      <textarea class="reset-note" id="resetNote" placeholder="Ce que je veux améliorer cette semaine…"></textarea>
+    </div>
+  </div>
+</section>
 <div class="hero">
 <section class="hero-card"><div class="hero-title">mon moment</div><div class="clock" id="clock">--:--</div><div class="date" id="date">—</div></section>
 <section class="hero-card"><div class="arabic">الحمد لله</div><div class="quote">« Fais ce qui est bon pour ta dunya, sans oublier ce qui nourrit ton cœur et ton deen. »</div></section>
@@ -84,10 +142,10 @@ function applyTheme(){let h=new Date().getHours();document.body.classList.toggle
 function clock(){let d=new Date();document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});applyTheme()}
 function renderCalendar(){document.getElementById("calTitle").textContent=names[cal.getMonth()]+" "+cal.getFullYear();let s=days();let first=(new Date(cal.getFullYear(),cal.getMonth(),1).getDay()+6)%7;for(let i=0;i<first;i++)s+="<div class='day empty'></div>";let n=new Date(cal.getFullYear(),cal.getMonth()+1,0).getDate();for(let i=1;i<=n;i++){let d=new Date(cal.getFullYear(),cal.getMonth(),i),k=key(d),cls="day";if(k===key(new Date()))cls+=" today";if(k===key(selected))cls+=" sel";s+="<button class='"+cls+"' onclick='pick("+d.getFullYear()+","+d.getMonth()+","+i+")'>"+i+"</button>"}document.getElementById("cal").innerHTML="<div class='dow'>L</div><div class='dow'>M</div><div class='dow'>M</div><div class='dow'>J</div><div class='dow'>V</div><div class='dow'>S</div><div class='dow'>D</div>"+s}
 function days(){return ""}
-function pick(y,m,d){selected=new Date(y,m,d);cal=new Date(y,m,1);setActiveTab(key(selected)===key(new Date())?"tabToday":"");render()}
+function pick(y,m,d){showNormalView();selected=new Date(y,m,d);cal=new Date(y,m,1);setActiveTab(key(selected)===key(new Date())?"tabToday":"");render()}
 function month(x){cal.setMonth(cal.getMonth()+x);renderCalendar()}
-function go(x){selected.setDate(selected.getDate()+x);cal=new Date(selected.getFullYear(),selected.getMonth(),1);setActiveTab(key(selected)===key(new Date())?"tabToday":"");render()}
-function today(){selected=new Date();cal=new Date(selected.getFullYear(),selected.getMonth(),1);setActiveTab("tabToday");render()}
+function go(x){showNormalView();selected.setDate(selected.getDate()+x);cal=new Date(selected.getFullYear(),selected.getMonth(),1);setActiveTab(key(selected)===key(new Date())?"tabToday":"");render()}
+function today(){showNormalView();selected=new Date();cal=new Date(selected.getFullYear(),selected.getMonth(),1);setActiveTab("tabToday");render()}
 function bind(id,prop,d){let e=document.getElementById(id);e.value=d[prop]||"";e.oninput=()=>{d[prop]=e.value;save(d)}}
 function render(){let d=get();document.getElementById("dayTitle").textContent=selected.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});document.getElementById("daySub").textContent=selected.toLocaleDateString("fr-FR",{year:"numeric"});bind("priority","priority",d);bind("studyFocus","studyFocus",d);bind("selfcare","selfcare",d);bind("bag","bag",d);document.querySelectorAll(".meal").forEach((e,i)=>{e.value=d.meals[i]||"";e.oninput=()=>{d.meals[i]=e.value;save(d)}});document.getElementById("journal").value=d.journal||"";document.getElementById("journal").oninput=e=>{d.journal=e.target.value;save(d)};renderCalendar();renderTasks(d);renderSchedule(d);renderPrayers(d);renderHabits(d);renderChips(d);stats()}
 function renderTasks(d){document.getElementById("tasks").innerHTML=d.tasks.map((v,i)=>"<div class='item'><input class='check' type='checkbox' "+(d.tasksDone?.[i]?"checked":"")+" onchange='taskDone("+i+",this.checked)'><input class='field' value='"+esc(v)+"' placeholder='Tâche "+(i+1)+"…' oninput='taskText("+i+",this.value)'></div>").join("")}
@@ -102,8 +160,10 @@ function habit(i){let d=get();d.habits[i]=d.habits[i]?0:1;save(d);render()}
 function renderChips(d){document.querySelectorAll("[data-k]").forEach(b=>{let on=d[b.dataset.k]===b.dataset.v;b.classList.toggle("on",on);b.onclick=()=>{let x=get();x[b.dataset.k]=b.dataset.v;save(x);render()}})}
 function stats(){let d=get();document.getElementById("doneCount").textContent=d.prayers.filter(Boolean).length;document.getElementById("habitCount").textContent=d.habits.filter(Boolean).length}
 function setActiveTab(id){document.querySelectorAll(".planner-tab").forEach(b=>b.classList.remove("active"));document.getElementById(id)?.classList.add("active")}
-function weekView(){setActiveTab("tabWeek");document.querySelector(".sidebar")?.scrollIntoView({behavior:"smooth",block:"start"});renderCalendar()}
-function weeklyReset(){if(!confirm("Réinitialiser les habitudes et tâches de la semaine ?"))return;let base=new Date(selected);let day=(base.getDay()+6)%7;base.setDate(base.getDate()-day);for(let i=0;i<7;i++){let d=new Date(base);d.setDate(base.getDate()+i);let k="dx:"+key(d);try{let x=JSON.parse(localStorage.getItem(k));if(x){x.tasksDone=Array((x.tasks||[]).length).fill(0);x.habits=Array(habits.length).fill(0);localStorage.setItem(k,JSON.stringify(x))}}catch(e){}}setActiveTab("tabReset");render()}
+function showNormalView(){document.getElementById("resetView").classList.remove("show");document.querySelector(".hero").style.display="grid";document.querySelector(".layout").style.display="grid"}
+function weekView(){showNormalView();setActiveTab("tabWeek");document.querySelector(".sidebar")?.scrollIntoView({behavior:"smooth",block:"start"});renderCalendar()}
+function weekendReset(){document.getElementById("resetView").classList.add("show");document.querySelector(".hero").style.display="none";document.querySelector(".layout").style.display="none";setActiveTab("tabReset");loadReset()}
+function loadReset(){let x={};try{x=JSON.parse(localStorage.getItem("dx:weekend-reset"))||{}}catch(e){}document.querySelectorAll("[data-reset]").forEach(b=>{b.checked=!!x[b.dataset.reset];b.onchange=()=>{x[b.dataset.reset]=b.checked;localStorage.setItem("dx:weekend-reset",JSON.stringify(x))}});let n=document.getElementById("resetNote");n.value=x.note||"";n.oninput=()=>{x.note=n.value;localStorage.setItem("dx:weekend-reset",JSON.stringify(x))}}
 function clearDay(){if(confirm("Effacer les données de cette journée ?")){localStorage.removeItem("dx:"+key(selected));render()}}
 function esc(x){return String(x||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 setInterval(()=>{clock();renderPrayers(get())},1000);clock();render();setInterval(()=>applyTheme(),60000);
