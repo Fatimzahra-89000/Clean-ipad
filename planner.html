@@ -73,36 +73,34 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
   }
 }
 </style><style id="landscape-personalization">
-/* iPad paysage + personnalisation */
-html,body{min-height:100%}
-body{overflow-x:auto}
+/* iPad paysage — retour au planner original, avec espace du jour compact */
 .app{max-width:1440px!important;padding:18px 22px!important}
-.layout{display:grid!important;grid-template-columns:300px minmax(0,1fr)!important;grid-template-areas:"side main"!important;gap:18px!important;align-items:start!important;width:100%!important;min-width:0!important}
+.layout{display:grid!important;grid-template-columns:300px minmax(0,1fr)!important;grid-template-areas:"side main"!important;gap:18px!important;align-items:start!important;width:100%!important}
 .layout>.sidebar{grid-area:side!important;width:300px!important;min-width:300px!important}
 .layout>main{grid-area:main!important;width:100%!important;min-width:0!important;margin:0!important;position:relative!important}
-.day-dashboard{border-radius:22px!important;padding:18px!important;margin-bottom:14px!important}
-.dashboard-badge{font-size:10px;font-weight:800;color:var(--pink);background:#fff;border:1px solid var(--line);padding:8px 11px;border-radius:999px}
-.dashboard-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
-.dash-box{min-height:82px!important}
-.custom-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:10px}
-.custom-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:11px;min-width:0;min-height:72px}
-.choice-row{display:flex;gap:5px;flex-wrap:wrap}
-.choice-row button{border:1px solid var(--line);background:#fff;border-radius:10px;min-width:28px;height:28px;cursor:pointer;color:var(--deep)}
-.choice-row button.on{background:var(--rose);border-color:var(--pink);box-shadow:0 0 0 2px #f9dce766}
-.custom-card .dash-input{font-size:11px}
-.dash-quote{margin-top:10px}
+.top-right-area{display:grid;grid-template-columns:minmax(0,1fr) 205px;gap:12px;align-items:stretch;margin-bottom:14px}
+.compact-dashboard{margin:0!important;min-width:0!important;padding:13px!important;border-radius:18px!important}
+.compact-dashboard .dashboard-head{margin-bottom:8px!important}
+.compact-dashboard .dashboard-title{font-size:16px!important}
+.compact-dashboard .dashboard-sub{font-size:10px!important}
+.dashboard-scroll{display:flex;gap:9px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:thin}
+.dashboard-scroll .dash-box,.dashboard-scroll .custom-card{flex:0 0 150px;min-height:74px;padding:10px;border-radius:13px}
+.dashboard-scroll .dash-quote{flex:0 0 190px;min-height:74px;padding:10px;border-radius:13px;font-size:10px}
+.dashboard-scroll .dash-label{font-size:9px;margin-bottom:5px}
+.dashboard-scroll .dash-input{font-size:11px}
+.dashboard-scroll .choice-row{gap:3px}
+.dashboard-scroll .choice-row button{min-width:25px;height:25px;font-size:12px}
+.side-widgets{display:grid;grid-template-rows:1fr 1fr;gap:10px;min-width:0}
+.side-widgets>div{background:linear-gradient(135deg,#fff,#fdf0f5);border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:var(--shadow);min-width:0}
+.side-widgets .iman-wrap{width:100%;aspect-ratio:1.55}
+.side-widgets .widget-title{font-size:10px;margin-bottom:6px}
+.side-widgets .floating-bilan{display:flex;flex-direction:column;justify-content:center}
+.side-widgets .floating-bilan h4{margin-top:0}
 .columns{grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr)!important;gap:14px!important}
-.columns>div:first-child .box:first-child{min-height:480px}
-.schedule .slot{min-height:34px}
+.columns>div:first-child .box:first-child{min-height:0}
 @media(max-width:900px){
-  .app{min-width:1160px!important}
-  .layout{grid-template-columns:300px 1fr!important}
-}
-@media(max-width:700px){
-  .app{min-width:1160px!important;padding:14px!important}
-  .layout{grid-template-columns:300px 820px!important}
-  .layout>.sidebar{width:300px!important}
-  .layout>main{width:820px!important}
+ .app{min-width:1120px!important}
+ .layout{grid-template-columns:300px 820px!important}
 }
 </style><style id="floating-widgets-final">
 .floating-widgets{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr);gap:12px;margin-bottom:14px}
@@ -120,20 +118,7 @@ body{overflow-x:auto}
 <div class="calendar-head"><button class="pill small" id="mPrev">‹</button><div class="month-title" id="calTitle"></div><button class="pill small" id="mNext">›</button></div>
 <div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div></div>
 </aside><main>
-<div class="floating-widgets">
-  <div class="floating-inspiration">
-    <div class="widget-title">♡ inspiration</div>
-    <div class="iman-wrap"><img id="inspirationImage" src="inspiration/choukr.webp" alt="Inspiration islamique rose"><div class="iman-caption">♡ inspiration ♡</div></div>
-  </div>
-  <div class="floating-bilan">
-    <h4>♡ MON BILAN</h4>
-    <div class="mini-stat"><span>🕌 Prières</span><span id="bilanPrayers">0/5</span></div>
-    <div class="mini-stat"><span>🌷 Habitudes</span><span id="bilanHabits">0/4</span></div>
-    <div class="mini-progress"><div id="bilanProgress"></div></div>
-    <div class="mini-total" id="bilanTotal">0% rempli</div>
-  </div>
-</div>
-<div class="day-dashboard">
+<div class="top-right-area">
   <div class="dashboard-head">
     <div><div class="dashboard-title">♡ mon espace du jour</div><div class="dashboard-sub">tout ce dont j'ai besoin, au même endroit</div></div>
     <div class="dashboard-badge">🌷 2026 / 2027</div>
