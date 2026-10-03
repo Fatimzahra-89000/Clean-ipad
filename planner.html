@@ -228,7 +228,7 @@ function updateNextPrayer(times){
  const mins=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
  let next=-1;
  for(let i=0;i<times.length;i++){const p=times[i].split(":").map(Number);if(p[0]*60+p[1]>mins){next=i;break;}}
- if(next===-1){document.getElementById("nextPrayerName").textContent="Fajr demain";document.getElementById("nextPrayerCount").textContent="06:23";return;}
+ if(next===-1){const tomorrow=new Date(now);tomorrow.setDate(tomorrow.getDate()+1);const t=prayerTimes[key(tomorrow)];document.getElementById("nextPrayerName").textContent="Fajr demain";document.getElementById("nextPrayerCount").textContent=t?t[0]:"selon les horaires du lendemain";return;}
  const p=times[next].split(":").map(Number),target=new Date(now);target.setHours(p[0],p[1],0,0);
  const diff=Math.max(0,target-now),hh=Math.floor(diff/3600000),mm=Math.floor(diff%3600000/60000),ss=Math.floor(diff%60000/1000);
  document.getElementById("nextPrayerName").textContent=prayerNames[next]+" • "+times[next];
