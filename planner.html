@@ -1,247 +1,98 @@
 <!doctype html>
-<html lang="fr"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>My Digital Agenda • 2026/2027</title><!-- pages-refresh: 2026-10-03-2 -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#8d78c9">
+<title>Deen × Dunya — My Living Planner</title>
 <style>
-:root{--bg:#fff8fb;--paper:#fffdfd;--pink:#e9a7bd;--rose:#f9dce7;--deep:#795766;--muted:#b18f9d;--line:#f0cfdc;--shadow:0 10px 30px #c78da518}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff9fb,#fdf0f5);color:var(--deep);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.app{max-width:1200px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}
-.brand{font-weight:800;font-size:22px;color:var(--pink)}.sub{font-size:12px;color:var(--muted)}.nav{display:flex;gap:8px;flex-wrap:wrap}
-.pill{background:#fff;border:1px solid var(--line);color:var(--deep);border-radius:999px;padding:9px 13px}.pill.active,.pill:hover{background:var(--rose)}
-.layout{display:grid !important;grid-template-columns:280px minmax(0,1fr) !important;grid-template-rows:auto auto !important;gap:16px !important;align-items:start !important;width:100% !important;position:relative !important}.layout>.sidebar{grid-column:1 !important;grid-row:1 / span 2 !important;width:280px !important}.layout>main{grid-column:2 !important;grid-row:1 !important;width:100% !important;min-width:0 !important;position:static !important}.day-dashboard{width:100%}.card{background:rgba(255,253,253,.92);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:17px}
-.sidebar h3,.section-title{margin:0 0 10px;color:var(--pink)}.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.month-title{font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.dow{font-size:10px;text-align:center;color:var(--muted);padding:4px}.day{min-height:34px;border-radius:10px;background:#fff;border:1px solid transparent;color:var(--deep)}.day:hover{background:var(--rose)}.day.today{border-color:var(--pink)}.day.sel{background:var(--pink);color:#fff}.day.empty{background:transparent}
-.main-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.date-title{font-size:24px;font-weight:800;color:var(--pink)}.date-small{font-size:12px;color:var(--muted)}
-.columns{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}.box h4{margin:0 0 10px;color:var(--pink)}
-.priority{background:linear-gradient(90deg,#f9e5ec,#fff)}.inputline{width:100%;border:0;border-bottom:1px solid var(--line);padding:8px 2px;background:transparent;color:var(--deep);outline:0}
-.tasks{display:grid;gap:8px}.task{display:flex;gap:8px;align-items:center}.task input[type=text]{flex:1;border:0;border-bottom:1px solid #f0dfe5;padding:7px;background:transparent;outline:0}
-.schedule{display:grid;grid-template-columns:48px 1fr}.hour{font-size:11px;color:var(--muted);padding:8px 5px;border-bottom:1px dashed var(--line)}.slot{min-height:31px;border-bottom:1px dashed var(--line);outline:0;padding:7px}
-.prayer-panel{display:grid;gap:10px}.next-prayer{background:linear-gradient(90deg,#f9e5ec,#fff);border:1px solid var(--line);border-radius:14px;padding:11px;text-align:center}.next-prayer-label{font-size:10px;color:var(--muted);font-weight:700}.next-prayer-name{font-size:15px;color:var(--pink);font-weight:800;margin-top:3px}.next-prayer-count{font-size:11px;color:var(--deep);margin-top:3px}.prayer-source{font-size:9px;color:var(--muted);text-align:center}.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{padding:9px 5px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:11px;background:#fff;color:var(--deep);cursor:pointer}.prayer.on{background:var(--rose);border-color:var(--pink)}.prayer-time{font-size:13px;font-weight:800;color:var(--pink);margin-top:3px}.prayer-name{font-size:10px;font-weight:700}.prayer-state{font-size:9px;color:var(--muted);margin-top:3px}
-.checkrow{display:flex;gap:8px;flex-wrap:wrap}.checkchip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:11px;color:var(--deep);cursor:pointer}.checkchip.on{background:var(--rose);border-color:var(--pink)}
-textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:vertical;outline:0;background:#fff;color:var(--deep)}
-.months{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
-.actions{display:flex;gap:7px;flex-wrap:wrap}.small{font-size:11px;padding:7px 10px}.day-dashboard{background:linear-gradient(135deg,#fffdfd,#fdf0f5);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}.dashboard-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}.dashboard-title{font-size:18px;font-weight:800;color:var(--pink)}.dashboard-sub{font-size:11px;color:var(--muted)}.dashboard-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.dash-box{background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px;min-height:92px}.dash-label{font-size:10px;font-weight:800;color:var(--pink);margin-bottom:7px}.dash-input{width:100%;border:0;outline:0;background:transparent;color:var(--deep);font-size:12px}.dash-input::placeholder{color:#c6aab5}.dash-wide{grid-column:1/-1;min-height:70px}.dash-quote{font-size:11px;line-height:1.5;color:var(--deep);background:linear-gradient(90deg,#fbe7ef,#fff);border:1px solid var(--line);border-radius:15px;padding:11px}.dash-quote b{color:var(--pink)}
-@media(max-width:700px){.app{padding:12px}.layout{display:grid!important;grid-template-columns:280px 520px!important;grid-template-areas:"side main"!important;overflow-x:auto!important}.layout>.sidebar{grid-area:side!important;width:280px!important}.layout>main{grid-area:main!important;width:520px!important;margin-top:0!important;position:relative!important}}\n@media(max-width:850px){.columns{grid-template-columns:1fr}.date-title{font-size:20px}.months{grid-template-columns:repeat(3,1fr)}}
- .sidebar-bottom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.iman-wrap{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fbeaf2;box-shadow:var(--shadow);width:100%;aspect-ratio:1;position:relative}.iman-wrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .28s ease}.iman-wrap img.fade{opacity:0}.iman-caption{display:none}.mini-bilan{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#fff,#fdf0f5);box-shadow:var(--shadow);padding:11px;min-width:0}.mini-bilan h4{margin:0 0 9px;font-size:11px;color:var(--pink);font-weight:800}.mini-stat{display:flex;justify-content:space-between;gap:5px;font-size:10px;color:var(--deep);margin:7px 0}.mini-stat span:last-child{font-weight:800;color:var(--pink)}.mini-progress{height:7px;border-radius:999px;background:#f5dfe7;overflow:hidden;margin-top:9px}.mini-progress>div{height:100%;width:0;background:var(--pink);border-radius:999px;transition:width .25s ease}.mini-total{text-align:center;font-size:9px;color:var(--muted);margin-top:7px}</style><style id="layout-final-2026">
-.layout{display:grid!important;grid-template-columns:280px minmax(0,1fr)!important;grid-template-areas:"side main"!important;gap:16px!important;align-items:start!important;width:100%!important}
-.layout>.sidebar{grid-area:side!important;width:280px!important;min-width:280px!important}
-.layout>main{grid-area:main!important;width:100%!important;min-width:0!important;margin-top:0!important;position:relative!important}
-.day-dashboard{display:block!important;width:100%!important}
-@media(max-width:700px){
-.layout{grid-template-columns:280px 520px!important;grid-template-areas:"side main"!important;overflow-x:auto!important}
-.layout>.sidebar{width:280px!important}
-.layout>main{width:520px!important;margin-top:0!important}
-}
-</style><style id="absolute-layout-final">
-/* Position the daily area directly in the large space to the right of the calendar */
-.layout{
-  display:block!important;
-  position:relative!important;
-  width:100%!important;
-  min-height:900px!important;
-}
-.layout>.sidebar{
-  display:block!important;
-  width:280px!important;
-  min-width:280px!important;
-  position:relative!important;
-}
-.layout>main{
-  display:block!important;
-  position:absolute!important;
-  left:296px!important;
-  top:0!important;
-  width:calc(100% - 296px)!important;
-  min-width:0!important;
-  margin:0!important;
-  padding:0!important;
-}
-.layout>main .day-dashboard{
-  display:block!important;
-  width:100%!important;
-  margin:0 0 14px 0!important;
-}
-@media(max-width:700px){
-  .layout{
-    min-width:816px!important;
-    overflow-x:auto!important;
-  }
-  .layout>.sidebar{width:280px!important}
-  .layout>main{
-    left:296px!important;
-    width:520px!important;
-  }
-}
-</style><style id="landscape-personalization">
-/* iPad paysage — retour au planner original, avec espace du jour compact */
-.app{max-width:1440px!important;padding:18px 22px!important}
-.layout{display:grid!important;grid-template-columns:300px minmax(0,1fr)!important;grid-template-areas:"side main"!important;gap:18px!important;align-items:start!important;width:100%!important}
-.layout>.sidebar{grid-area:side!important;width:300px!important;min-width:300px!important}
-.layout>main{grid-area:main!important;width:100%!important;min-width:0!important;margin:0!important;position:relative!important}
-.top-right-area{display:grid;grid-template-columns:minmax(0,1fr) 205px;gap:12px;align-items:stretch;margin-bottom:14px}
-.compact-dashboard{margin:0!important;min-width:0!important;padding:13px!important;border-radius:18px!important}
-.compact-dashboard .dashboard-head{margin-bottom:8px!important}
-.compact-dashboard .dashboard-title{font-size:16px!important}
-.compact-dashboard .dashboard-sub{font-size:10px!important}
-.dashboard-scroll{display:flex;gap:9px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:thin}
-.dashboard-scroll .dash-box,.dashboard-scroll .custom-card{flex:0 0 150px;min-height:74px;padding:10px;border-radius:13px}
-.dashboard-scroll .dash-quote{flex:0 0 190px;min-height:74px;padding:10px;border-radius:13px;font-size:10px}
-.dashboard-scroll .dash-label{font-size:9px;margin-bottom:5px}
-.dashboard-scroll .dash-input{font-size:11px}
-.dashboard-scroll .choice-row{gap:3px}
-.dashboard-scroll .choice-row button{min-width:25px;height:25px;font-size:12px}
-.side-widgets{display:grid;grid-template-rows:1fr 1fr;gap:10px;min-width:0}
-.side-widgets>div{background:linear-gradient(135deg,#fff,#fdf0f5);border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:var(--shadow);min-width:0}
-.side-widgets .iman-wrap{width:100%;aspect-ratio:1.55}
-.side-widgets .widget-title{font-size:10px;margin-bottom:6px}
-.side-widgets .floating-bilan{display:flex;flex-direction:column;justify-content:center}
-.side-widgets .floating-bilan h4{margin-top:0}
-.columns{grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr)!important;gap:14px!important}
-.columns>div:first-child .box:first-child{min-height:0}
-@media(max-width:900px){
- .app{min-width:1120px!important}
- .layout{grid-template-columns:300px 820px!important}
-}
-</style><style id="floating-widgets-final">
-.floating-widgets{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr);gap:12px;margin-bottom:14px}
-.floating-inspiration,.floating-bilan{background:linear-gradient(135deg,#fff,#fdf0f5);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
-.floating-inspiration .iman-wrap{width:100%;aspect-ratio:1.45}
-.floating-bilan{display:flex;flex-direction:column;justify-content:center;min-height:180px}
-.widget-title{font-size:12px;font-weight:800;color:var(--pink);margin-bottom:8px}
-@media(max-width:900px){.floating-widgets{grid-template-columns:1fr 1fr}}
-</style></head>
-<body><div class="app">
-<div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
-<div class="actions"><button class="pill" id="prev">‹</button><button class="pill" id="today">Aujourd'hui</button><button class="pill" id="next">›</button></div></div>
-<div class="nav" id="monthNav"></div>
-<div class="layout"><aside class="card sidebar">
-<div class="calendar-head"><button class="pill small" id="mPrev">‹</button><div class="month-title" id="calTitle"></div><button class="pill small" id="mNext">›</button></div>
-<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div></div>
-</aside><main>
-<div class="top-right-area">
-  <div class="dashboard-head">
-    <div><div class="dashboard-title">♡ mon espace du jour</div><div class="dashboard-sub">tout ce dont j'ai besoin, au même endroit</div></div>
-    <div class="dashboard-badge">🌷 2026 / 2027</div>
-  </div>
-  <div class="dashboard-grid">
-    <div class="dash-box"><div class="dash-label">🎯 OBJECTIF PRINCIPAL</div><input class="dash-input" id="dashGoal" placeholder="Ce que je veux accomplir…"></div>
-    <div class="dash-box"><div class="dash-label">📚 À RÉVISER</div><input class="dash-input" id="dashStudy" placeholder="Matière ou chapitre…"></div>
-    <div class="dash-box"><div class="dash-label">🤍 À NE PAS OUBLIER</div><input class="dash-input" id="dashRemember" placeholder="Un rappel important…"></div>
-    <div class="dash-box"><div class="dash-label">🧴 PETIT MOMENT POUR MOI</div><input class="dash-input" id="dashSelf" placeholder="Une petite chose agréable…"></div>
-  </div>
-  <div class="custom-strip">
-    <div class="custom-card"><div class="dash-label">🌸 HUMEUR</div><div class="choice-row" id="moodChoices"><button data-v="🥰">🥰</button><button data-v="🙂">🙂</button><button data-v="😌">😌</button><button data-v="😐">😐</button><button data-v="😴">😴</button></div></div>
-    <div class="custom-card"><div class="dash-label">⚡ ÉNERGIE</div><div class="choice-row" id="energyChoices"><button data-v="1">♡</button><button data-v="2">♡</button><button data-v="3">♡</button><button data-v="4">♡</button><button data-v="5">♡</button></div></div>
-    <div class="custom-card"><div class="dash-label">🎧 FOCUS DU JOUR</div><input class="dash-input" id="customFocus" placeholder="Ex : philo, HGGSP…"></div>
-    <div class="custom-card"><div class="dash-label">🧴 SELF-CARE</div><input class="dash-input" id="customSelfcare" placeholder="Une petite chose pour moi…"></div>
-    <div class="custom-card"><div class="dash-label">🎒 SAC À PRÉPARER</div><input class="dash-input" id="customBag" placeholder="Livres, cahiers, affaires…"></div>
-    <div class="custom-card"><div class="dash-label">👗 TENUE / IDÉE</div><input class="dash-input" id="customOutfit" placeholder="Une idée pour demain…"></div>
-  </div>
-  <div class="dash-quote"><b>♡ rappel du jour</b> · Avance doucement, fais de ton mieux, et laisse le reste à Allah.</div>
+:root{--bg:#f4efff;--bg2:#ebe2ff;--card:rgba(255,255,255,.78);--card2:rgba(255,255,255,.58);--ink:#403758;--muted:#8d829f;--accent:#8d78c9;--accent2:#b6a5e5;--line:#ddd3f2;--good:#a79ad5;--shadow:0 12px 35px rgba(92,70,140,.12)}
+body.night{--bg:#e8f0ff;--bg2:#d9e7fb;--card:rgba(255,255,255,.76);--card2:rgba(255,255,255,.55);--ink:#34425d;--muted:#7c8aa4;--accent:#7897c9;--accent2:#a9c0e3;--line:#cfdaec;--shadow:0 12px 35px rgba(65,91,130,.12)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg),var(--bg2));color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Avenir Next","Segoe UI",sans-serif;transition:.5s}
+button,input,textarea{font:inherit}button{cursor:pointer}.app{max-width:1450px;margin:auto;padding:20px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}.brand{font-size:24px;font-weight:800;color:var(--accent)}.subtitle{font-size:11px;color:var(--muted);margin-top:3px}.header-actions{display:flex;gap:7px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 12px}.pill:hover{background:var(--card2)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:14px}.hero-card,.card{background:var(--card);border:1px solid rgba(255,255,255,.7);box-shadow:var(--shadow);backdrop-filter:blur(12px);border-radius:22px}
+.hero-card{padding:18px}.hero-title{font-size:12px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;font-weight:800}.clock{font-size:48px;font-weight:800;color:var(--accent);margin-top:5px}.date{font-size:12px;color:var(--muted);text-transform:capitalize}.arabic{font-family:Georgia,serif;font-size:29px;color:var(--accent);text-align:right}.quote{font-family:Georgia,serif;font-size:13px;line-height:1.5;margin-top:5px}
+.layout{display:grid;grid-template-columns:295px minmax(0,1fr);gap:15px;align-items:start}.sidebar{padding:15px;position:sticky;top:12px}.main{min-width:0}.card{padding:15px;margin-bottom:14px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.section-title h2{font-size:14px;margin:0;color:var(--accent)}.section-title span{font-size:10px;color:var(--muted)}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;font-weight:800}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.dow{text-align:center;font-size:9px;color:var(--muted);padding:3px}.day{min-height:34px;border:1px solid transparent;border-radius:9px;background:var(--card2);color:var(--ink)}.day:hover{background:var(--bg2)}.day.today{border-color:var(--accent)}.day.sel{background:var(--accent);color:#fff}.day.empty{background:transparent}.months{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:12px}.month{padding:7px 3px;border:1px solid var(--line);border-radius:9px;background:var(--card2);font-size:10px;color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:12px}.stat{padding:9px;border:1px solid var(--line);border-radius:12px;background:var(--card2)}.stat b{display:block;color:var(--accent);font-size:16px}.stat span{font-size:9px;color:var(--muted)}
+.dayhead{display:flex;justify-content:space-between;gap:10px;align-items:center}.dayhead h1{font-size:22px;margin:0;color:var(--accent)}.small{font-size:10px;color:var(--muted)}
+.topgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.mini{padding:11px;border:1px solid var(--line);border-radius:15px;background:var(--card2);min-height:76px}.label{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--accent);margin-bottom:6px}.field{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;outline:0;color:var(--ink);padding:5px 0;font-size:11px}.field::placeholder{color:var(--muted)}
+.columns{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.list{display:grid;gap:7px}.item{display:flex;gap:7px;align-items:center}.item input[type=text]{flex:1}.check{accent-color:var(--accent)}.add{border:1px dashed var(--line);background:transparent;color:var(--accent);border-radius:10px;padding:6px;font-size:11px;width:100%}
+.schedule{display:grid;grid-template-columns:45px 1fr}.hour{font-size:9px;color:var(--muted);padding:7px 3px;border-bottom:1px dashed var(--line)}.slot{min-height:30px;border-bottom:1px dashed var(--line);padding:6px;outline:0;font-size:10px}
+.prayer-next{background:linear-gradient(90deg,var(--bg2),var(--card2));border:1px solid var(--line);border-radius:14px;padding:11px;text-align:center;margin-bottom:9px}.next-label{font-size:9px;color:var(--muted);font-weight:800}.next-name{font-size:17px;color:var(--accent);font-weight:800}.count{font-size:11px;margin-top:3px}.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{border:1px solid var(--line);border-radius:12px;padding:8px 4px;background:var(--card2);text-align:center}.prayer b{display:block;color:var(--accent);font-size:12px}.prayer span{font-size:9px}.prayer.done{background:var(--bg2)}
+.chips{display:flex;gap:5px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:var(--card2);border-radius:999px;padding:7px 9px;font-size:10px;color:var(--ink)}.chip.on{background:var(--accent);color:#fff}
+textarea{width:100%;min-height:95px;border:1px solid var(--line);border-radius:13px;background:var(--card2);color:var(--ink);padding:9px;outline:0;resize:vertical}
+.footer-note{text-align:center;font-size:9px;color:var(--muted);padding:4px}
+@media(max-width:950px){.layout{grid-template-columns:250px minmax(0,1fr)}.topgrid{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.hero{grid-template-columns:1fr}}
+@media(max-width:700px){.app{min-width:980px}.layout{grid-template-columns:250px 700px}.sidebar{position:relative}.hero{grid-template-columns:1fr 1fr}.columns{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="brand">☾ Deen × Dunya</div><div class="subtitle">my living planner • organisation, études, ibadah & self-care</div></div><div class="header-actions"><button class="pill" onclick="go(-1)">‹</button><button class="pill" onclick="today()">Aujourd’hui</button><button class="pill" onclick="go(1)">›</button></div></header>
+<div class="hero">
+<section class="hero-card"><div class="hero-title">mon moment</div><div class="clock" id="clock">--:--</div><div class="date" id="date">—</div></section>
+<section class="hero-card"><div class="arabic">الحمد لله</div><div class="quote">« Fais ce qui est bon pour ta dunya, sans oublier ce qui nourrit ton cœur et ton deen. »</div></section>
 </div>
-<div class="card priority"><div class="main-head"><div><div class="date-title" id="dateTitle"></div><div class="date-small" id="dateSmall"></div></div><button class="pill" id="clearDay">Effacer la journée</button></div>
-<div style="font-size:12px;font-weight:700;color:var(--pink)">PRIORITÉ DU JOUR ♡</div><input class="inputline" id="priority" placeholder="Ce qui compte vraiment aujourd'hui…"></div>
-<div class="columns"><div>
-<div class="box"><h4>♡ MON AGENDA</h4><div class="schedule" id="schedule"></div></div>
-<div class="box"><h4>♡ ÉTUDES / RÉVISIONS</h4><div class="tasks" id="study"></div></div></div>
+<div class="layout">
+<aside class="card sidebar"><div class="section-title"><h2>♡ calendrier</h2><span id="monthLabel"></span></div><div class="calendar-head"><button class="pill" onclick="month(-1)">‹</button><b id="calTitle"></b><button class="pill" onclick="month(1)">›</button></div><div class="grid" id="cal"></div><div class="months" id="months"></div>
+<div class="stats"><div class="stat"><b id="doneCount">0</b><span>prières faites</span></div><div class="stat"><b id="habitCount">0</b><span>habitudes cochées</span></div></div></aside>
+<main class="main">
+<section class="card"><div class="dayhead"><div><h1 id="dayTitle">—</h1><div class="small" id="daySub">—</div></div><button class="pill" onclick="clearDay()">Effacer la journée</button></div><div class="topgrid" style="margin-top:13px">
+<div class="mini"><div class="label">🎯 PRIORITÉ</div><input class="field" id="priority" placeholder="Ce qui compte vraiment…"></div>
+<div class="mini"><div class="label">📚 À RÉVISER</div><input class="field" id="studyFocus" placeholder="Matière / chapitre…"></div>
+<div class="mini"><div class="label">🧴 SELF-CARE</div><input class="field" id="selfcare" placeholder="Un petit moment pour moi…"></div>
+<div class="mini"><div class="label">🎒 SAC / DEMAIN</div><input class="field" id="bag" placeholder="À préparer…"></div>
+</div></section>
+<div class="columns">
 <div>
-<div class="box"><h4>♡ TO DO</h4><div class="tasks" id="todo"></div></div>
-<div class="box"><h4>♡ PRIÈRES • MOSQUÉE KHADIJA</h4><div class="prayer-panel"><div class="next-prayer"><div class="next-prayer-label">PROCHAINE PRIÈRE</div><div class="next-prayer-name" id="nextPrayerName">—</div><div class="next-prayer-count" id="nextPrayerCount">—</div></div><div class="prayers" id="prayers"></div><div class="prayer-source">Horaires de la Mosquée Khadija • Auxerre</div></div></div>
-<div class="box"><h4>♡ MES HABITUDES</h4><div class="checkrow" id="habits"></div></div>
-<div class="box"><h4>♡ REPAS DU JOUR</h4><input class="inputline" id="breakfast" placeholder="Petit-déjeuner"><input class="inputline" id="lunch" placeholder="Déjeuner"><input class="inputline" id="dinner" placeholder="Dîner"></div>
-</div></div></main></div></div>
+<section class="card"><div class="section-title"><h2>♡ mon agenda</h2><span>ma journée</span></div><div class="schedule" id="schedule"></div></section>
+<section class="card"><div class="section-title"><h2>♡ dunya • études & tâches</h2><span>à faire</span></div><div class="list" id="tasks"></div><button class="add" onclick="addTask()">＋ ajouter une tâche</button></section>
+<section class="card"><div class="section-title"><h2>♡ repas</h2><span>prendre soin de moi</span></div><input class="field meal" placeholder="Petit-déjeuner"><input class="field meal" placeholder="Déjeuner"><input class="field meal" placeholder="Dîner"></section>
+</div>
+<div>
+<section class="card"><div class="section-title"><h2>♡ deen • prières</h2><span>Mosquée Khadija · Auxerre</span></div><div class="prayer-next"><div class="next-label">PROCHAINE PRIÈRE</div><div class="next-name" id="nextName">—</div><div class="count" id="count">—</div></div><div class="prayers" id="prayers"></div></section>
+<section class="card"><div class="section-title"><h2>♡ mes habitudes</h2><span>petites actions</span></div><div class="chips" id="habits"></div></section>
+<section class="card"><div class="section-title"><h2>♡ humeur & énergie</h2><span>check-in</span></div><div class="chips" id="moods"><button class="chip" data-k="mood" data-v="🥰">🥰</button><button class="chip" data-k="mood" data-v="🙂">🙂</button><button class="chip" data-k="mood" data-v="😌">😌</button><button class="chip" data-k="mood" data-v="😴">😴</button></div><div style="height:7px"></div><div class="chips" id="energy"><button class="chip" data-k="energy" data-v="1">♡</button><button class="chip" data-k="energy" data-v="2">♡♡</button><button class="chip" data-k="energy" data-v="3">♡♡♡</button><button class="chip" data-k="energy" data-v="4">♡♡♡♡</button><button class="chip" data-k="energy" data-v="5">♡♡♡♡♡</button></div></section>
+<section class="card"><div class="section-title"><h2>♡ journal du jour</h2><span>mes pensées</span></div><textarea id="journal" placeholder="Écris ici ce que tu veux garder de ta journée…"></textarea></section>
+</div></div>
+<div class="footer-note">Deen × Dunya · tout est sauvegardé automatiquement dans ton navigateur ♡</div>
+</main></div></div>
 <script>
-const start=new Date(2026,8,1), end=new Date(2027,7,31);
-const names=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
-const days=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
-let selected=new Date(), calMonth=new Date();
-if(selected<start)selected=new Date(start); if(selected>end)selected=new Date(end); calMonth=new Date(selected.getFullYear(),selected.getMonth(),1);
-const key=d=>{const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),n=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${n}`};
-const load=k=>{try{return JSON.parse(localStorage.getItem("agenda:"+k))||null}catch(e){return null}};
-const store=(k,v)=>localStorage.setItem("agenda:"+k,JSON.stringify(v));
-const fresh=()=>({priority:"",slots:{},todo:Array(6).fill(""),study:Array(3).fill(""),prayers:[0,0,0,0,0],habits:[0,0,0,0],meal:["","",""],dashboard:{goal:"",study:"",remember:"",self:""},custom:{mood:"",energy:"",focus:"",selfcare:"",bag:"",outfit:""}});
-const dayData=()=>load(key(selected))||fresh();
-function monthLabel(d){return names[d.getMonth()]+" "+d.getFullYear()}
-function goMonth(y,m){calMonth=new Date(y,m,1);renderCalendar();renderNav()}
-function setDay(d){if(d<start||d>end)return;selected=new Date(d);calMonth=new Date(d.getFullYear(),d.getMonth(),1);renderAll()}
-function renderNav(){
- let s=""; for(let i=0;i<12;i++){let y=i<4?2026:2027,m=i<4?8+i:i-4; s+='<button class="pill '+(m==calMonth.getMonth()&&y==calMonth.getFullYear()?'active':'')+'" onclick="goMonth('+y+','+m+')">'+names[m]+'</button>'}
- document.getElementById("monthNav").innerHTML=s;
-}
-function renderCalendar(){
- document.getElementById("calTitle").textContent=monthLabel(calMonth);
- const el=document.getElementById("calendar"); let s=days.map(x=>'<div class="dow">'+x+'</div>').join("");
- let first=(calMonth.getDay()+6)%7,total=new Date(calMonth.getFullYear(),calMonth.getMonth()+1,0).getDate();
- for(let i=0;i<first;i++)s+='<button class="day empty"></button>';
- for(let n=1;n<=total;n++){let d=new Date(calMonth.getFullYear(),calMonth.getMonth(),n),valid=d>=start&&d<=end;
-   s+=valid?'<button class="day '+(key(d)==key(selected)?'sel ':'')+(key(d)==key(new Date())?'today':'')+'" onclick="setDay(new Date('+d.getFullYear()+','+d.getMonth()+','+n+'))">'+n+'</button>':'<button class="day" disabled>'+n+'</button>'}
- el.innerHTML=s;
- let ms=""; for(let i=0;i<12;i++){let y=i<4?2026:2027,m=i<4?8+i:i-4;ms+='<button class="month-btn" onclick="goMonth('+y+','+m+')">'+names[m]+'</button>'} document.getElementById("months").innerHTML=ms;
-}
-function renderList(id,arr,type){
- let el=document.getElementById(id),s=""; for(let i=0;i<arr.length;i++)s+='<div class="task"><input type="checkbox"><input type="text" value="'+String(arr[i]||"").replace(/"/g,"&quot;")+'" placeholder="'+(type=="study"?"Matière / devoir / révision":"À faire…")+'"></div>';
- el.innerHTML=s; let inputs=el.querySelectorAll('input[type="text"]'); inputs.forEach((inp,i)=>inp.oninput=()=>{let d=dayData();d[type][i]=inp.value;store(key(selected),d)});
-}
-function renderDashboard(d){
- let x=d.dashboard||{goal:"",study:"",remember:"",self:""},c=d.custom||{mood:"",energy:"",focus:"",selfcare:"",bag:"",outfit:""};
- ["goal","study","remember","self"].forEach(k=>{let e=document.getElementById("dash"+k.charAt(0).toUpperCase()+k.slice(1));if(!e)return;e.value=x[k]||"";e.oninput=()=>{let z=dayData();z.dashboard=z.dashboard||{};z.dashboard[k]=e.value;store(key(selected),z)}});
- ["focus","selfcare","bag","outfit"].forEach(k=>{let e=document.getElementById("custom"+k.charAt(0).toUpperCase()+k.slice(1));if(!e)return;e.value=c[k]||"";e.oninput=()=>{let z=dayData();z.custom=z.custom||{};z.custom[k]=e.value;store(key(selected),z)}});
- document.querySelectorAll("#moodChoices button").forEach(b=>{b.classList.toggle("on",b.dataset.v===c.mood);b.onclick=()=>{let z=dayData();z.custom=z.custom||{};z.custom.mood=b.dataset.v;store(key(selected),z);renderAll()}});
- document.querySelectorAll("#energyChoices button").forEach(b=>{b.classList.toggle("on",b.dataset.v===c.energy);b.textContent=(Number(b.dataset.v)<=Number(c.energy))?"♥":"♡";b.onclick=()=>{let z=dayData();z.custom=z.custom||{};z.custom.energy=b.dataset.v;store(key(selected),z);renderAll()}});
-}
-function renderSchedule(d){
- let el=document.getElementById("schedule"),s=""; for(let h=7;h<=22;h++)s+='<div class="hour">'+String(h).padStart(2,"0")+'h</div><div class="slot" contenteditable="true" data-h="'+h+'">'+(d.slots[h]||"")+'</div>';
- el.innerHTML=s; el.querySelectorAll(".slot").forEach(x=>x.oninput=()=>{let d2=dayData();d2.slots[x.dataset.h]=x.textContent;store(key(selected),d2)});
-}
-function renderAll(){
- let d=dayData(); renderDashboard(d); document.getElementById("dateTitle").textContent=selected.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
- document.getElementById("dateSmall").textContent=selected.toLocaleDateString("fr-FR")+" • "+monthLabel(selected);
- let pr=document.getElementById("priority");pr.value=d.priority;pr.oninput=()=>{d.priority=pr.value;store(key(selected),d)};
- renderSchedule(d);renderList("todo",d.todo,"todo");renderList("study",d.study,"study");updateMiniBilan(d);
- renderPrayers(d);
- document.getElementById("habits").innerHTML=[["📖","Qur-\u0061n"],["💧","Eau"],["📚","Études"],["🧴","Self-care"]].map((x,i)=>`<button class="checkchip ${d.habits[i]?"on":""}" onclick="toggleHabit(${i})">${x[0]} ${x[1]} ${d.habits[i]?"✓":"♡"}</button>`).join("");
- ["breakfast","lunch","dinner"].forEach((id,i)=>{let e=document.getElementById(id);e.value=d.meal[i]||"";e.oninput=()=>{let x=dayData();x.meal[i]=e.value;store(key(selected),x)}});
-  renderCalendar();renderNav();
-}
-function updateMiniBilan(d){let p=d.prayers.filter(Boolean).length,h=d.habits.filter(Boolean).length,total=p+h,percent=Math.round(total/9*100);document.getElementById("bilanPrayers").textContent=p+"/5";document.getElementById("bilanHabits").textContent=h+"/4";document.getElementById("bilanProgress").style.width=percent+"%";document.getElementById("bilanTotal").textContent=percent+"% rempli"}
-function togglePrayer(i){let d=dayData();d.prayers[i]=d.prayers[i]?0:1;store(key(selected),d);renderAll()}
-function toggleHabit(i){let d=dayData();d.habits[i]=d.habits[i]?0:1;store(key(selected),d);renderAll()}
-document.getElementById("prev").onclick=()=>setDay(new Date(selected.getTime()-86400000));
-document.getElementById("next").onclick=()=>setDay(new Date(selected.getTime()+86400000));
-document.getElementById("today").onclick=()=>{let n=new Date();setDay(n<start?start:n>end?end:n)};
-document.getElementById("mPrev").onclick=()=>{calMonth.setMonth(calMonth.getMonth()-1);renderCalendar();renderNav()};
-document.getElementById("mNext").onclick=()=>{calMonth.setMonth(calMonth.getMonth()+1);renderCalendar();renderNav()};
-document.getElementById("clearDay").onclick=()=>{if(confirm("Effacer toutes les données de cette journée ?")){localStorage.removeItem("agenda:"+key(selected));renderAll()}};
-const prayerTimes={
+const prayerData={
 "2026-10-01":["06:20","13:35","16:48","19:25","20:50"],"2026-10-02":["06:21","13:35","16:47","19:23","20:48"],"2026-10-03":["06:23","13:35","16:45","19:21","20:46"],"2026-10-04":["06:24","13:35","16:44","19:19","20:44"],"2026-10-05":["06:26","13:34","16:42","19:17","20:42"],"2026-10-06":["06:27","13:34","16:41","19:15","20:40"],"2026-10-07":["06:28","13:34","16:39","19:13","20:38"],"2026-10-08":["06:30","13:33","16:38","19:11","20:36"],"2026-10-09":["06:31","13:33","16:36","19:09","20:34"],"2026-10-10":["06:33","13:33","16:35","19:07","20:32"],"2026-10-11":["06:34","13:33","16:33","19:05","20:30"],"2026-10-12":["06:36","13:32","16:32","19:03","20:28"],"2026-10-13":["06:37","13:32","16:30","19:02","20:26"],"2026-10-14":["06:38","13:32","16:29","19:00","20:24"],"2026-10-15":["06:40","13:32","16:28","18:58","20:23"],"2026-10-16":["06:41","13:31","16:26","18:56","20:21"],"2026-10-17":["06:43","13:31","16:25","18:54","20:19"],"2026-10-18":["06:44","13:31","16:23","18:52","20:17"],"2026-10-19":["06:45","13:31","16:22","18:50","20:15"],"2026-10-20":["06:47","13:31","16:20","18:48","20:14"],"2026-10-21":["06:48","13:30","16:19","18:47","20:12"],"2026-10-22":["06:49","13:30","16:17","18:45","20:10"],"2026-10-23":["06:51","13:30","16:16","18:43","20:09"],"2026-10-24":["06:52","13:30","16:15","18:41","20:07"],"2026-10-25":["05:54","12:30","15:13","17:40","19:05"],"2026-10-26":["05:55","12:30","15:12","17:38","19:04"],"2026-10-27":["05:56","12:30","15:11","17:36","19:02"],"2026-10-28":["05:58","12:30","15:09","17:34","19:01"],"2026-10-29":["05:59","12:30","15:08","17:33","18:59"],"2026-10-30":["06:00","12:29","15:07","17:31","18:58"],"2026-10-31":["06:02","12:29","15:05","17:30","18:56"]};
-const prayerNames=["Fajr","Dhohr","Asr","Maghrib","Isha"];
-function renderPrayers(d){
- const times=prayerTimes[key(selected)];
- const el=document.getElementById("prayers");
- if(!times){el.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:10px;color:var(--muted)">Horaires non disponibles pour cette date.</div>';document.getElementById("nextPrayerName").textContent="—";document.getElementById("nextPrayerCount").textContent="Horaires à venir";return;}
- el.innerHTML=prayerNames.map(function(name,i){return '<button class="prayer '+(d.prayers[i]?"on":"")+'" onclick="togglePrayer('+i+')"><span class="prayer-name">'+name+'</span><br><span class="prayer-time">'+times[i]+'</span><div class="prayer-state">'+(d.prayers[i]?"✓ faite":"♡ à faire")+'</div></button>';}).join("");
- updateNextPrayer(times);
-}
-function updateNextPrayer(times){
- const now=new Date();
- if(key(selected)!==key(now)){document.getElementById("nextPrayerName").textContent="Prochaine : "+prayerNames[0]+" • "+times[0];document.getElementById("nextPrayerCount").textContent="Pour la journée sélectionnée";return;}
- const mins=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
- let next=-1;
- for(let i=0;i<times.length;i++){const p=times[i].split(":").map(Number);if(p[0]*60+p[1]>mins){next=i;break;}}
- if(next===-1){const tomorrow=new Date(now);tomorrow.setDate(tomorrow.getDate()+1);const t=prayerTimes[key(tomorrow)];document.getElementById("nextPrayerName").textContent="Fajr demain";document.getElementById("nextPrayerCount").textContent=t?t[0]:"selon les horaires du lendemain";return;}
- const p=times[next].split(":").map(Number),target=new Date(now);target.setHours(p[0],p[1],0,0);
- const diff=Math.max(0,target-now),hh=Math.floor(diff/3600000),mm=Math.floor(diff%3600000/60000),ss=Math.floor(diff%60000/1000);
- document.getElementById("nextPrayerName").textContent=prayerNames[next]+" • "+times[next];
- document.getElementById("nextPrayerCount").textContent="dans "+(hh?hh+" h ":"")+String(mm).padStart(2,"0")+" min "+String(ss).padStart(2,"0")+" s";
-}
-renderPrayers(dayData());
-setInterval(function(){updateNextPrayer(prayerTimes[key(selected)]||[]);},1000);
-
-renderAll();
-
-const inspirationImages=["inspiration/choukr.webp","inspiration/aman.webp","inspiration/tawakkul.webp","inspiration/tawba.webp","inspiration/yaqin.webp","inspiration/mosque.webp","inspiration/flower.webp"];
-let inspirationIndex=0;
-const inspirationImage=document.getElementById("inspirationImage");
-inspirationImages.forEach(src=>{const img=new Image();img.src=src});
-setInterval(()=>{inspirationImage.classList.add("fade");setTimeout(()=>{inspirationIndex=(inspirationIndex+1)%inspirationImages.length;inspirationImage.src=inspirationImages[inspirationIndex];inspirationImage.classList.remove("fade")},280)},2800);
-</script></body></html>
+const pnames=["Fajr","Dhohr","Asr","Maghrib","Isha"],habits=["Prière","Qur’an","Dhikr","Études","Eau","Self-care"];
+let selected=new Date();let cal=new Date(selected.getFullYear(),selected.getMonth(),1);
+const key=d=>d.toISOString().slice(0,10), names=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+function data(){let k="dx:"+key(selected);try{return JSON.parse(localStorage.getItem(k))||null}catch(e){return null}}
+function get(){return data()||{priority:"",studyFocus:"",selfcare:"",bag:"",tasks:Array(5).fill(""),meals:Array(3).fill(""),prayers:Array(5).fill(0),habits:Array(habits.length).fill(0),mood:"",energy:"",journal:"",slots:{}}}
+function save(d){localStorage.setItem("dx:"+key(selected),JSON.stringify(d))}
+function applyTheme(){let h=new Date().getHours();document.body.classList.toggle("night",h>=21||h<7)}
+function clock(){let d=new Date();document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});applyTheme()}
+function renderCalendar(){document.getElementById("calTitle").textContent=names[cal.getMonth()]+" "+cal.getFullYear();let s=days();let first=(new Date(cal.getFullYear(),cal.getMonth(),1).getDay()+6)%7;for(let i=0;i<first;i++)s+="<div class='day empty'></div>";let n=new Date(cal.getFullYear(),cal.getMonth()+1,0).getDate();for(let i=1;i<=n;i++){let d=new Date(cal.getFullYear(),cal.getMonth(),i),k=key(d),cls="day";if(k===key(new Date()))cls+=" today";if(k===key(selected))cls+=" sel";s+="<button class='"+cls+"' onclick='pick("+d.getFullYear()+","+d.getMonth()+","+i+")'>"+i+"</button>"}document.getElementById("cal").innerHTML="<div class='dow'>L</div><div class='dow'>M</div><div class='dow'>M</div><div class='dow'>J</div><div class='dow'>V</div><div class='dow'>S</div><div class='dow'>D</div>"+s}
+function days(){return ""}
+function pick(y,m,d){selected=new Date(y,m,d);cal=new Date(y,m,1);render()}
+function month(x){cal.setMonth(cal.getMonth()+x);renderCalendar()}
+function go(x){selected.setDate(selected.getDate()+x);cal=new Date(selected.getFullYear(),selected.getMonth(),1);render()}
+function today(){selected=new Date();cal=new Date(selected.getFullYear(),selected.getMonth(),1);render()}
+function bind(id,prop,d){let e=document.getElementById(id);e.value=d[prop]||"";e.oninput=()=>{d[prop]=e.value;save(d)}}
+function render(){let d=get();document.getElementById("dayTitle").textContent=selected.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});document.getElementById("daySub").textContent=selected.toLocaleDateString("fr-FR",{year:"numeric"});bind("priority","priority",d);bind("studyFocus","studyFocus",d);bind("selfcare","selfcare",d);bind("bag","bag",d);document.querySelectorAll(".meal").forEach((e,i)=>{e.value=d.meals[i]||"";e.oninput=()=>{d.meals[i]=e.value;save(d)}});document.getElementById("journal").value=d.journal||"";document.getElementById("journal").oninput=e=>{d.journal=e.target.value;save(d)};renderCalendar();renderTasks(d);renderSchedule(d);renderPrayers(d);renderHabits(d);renderChips(d);stats()}
+function renderTasks(d){document.getElementById("tasks").innerHTML=d.tasks.map((v,i)=>"<div class='item'><input class='check' type='checkbox' "+(d.tasksDone?.[i]?"checked":"")+" onchange='taskDone("+i+",this.checked)'><input class='field' value='"+esc(v)+"' placeholder='Tâche "+(i+1)+"…' oninput='taskText("+i+",this.value)'></div>").join("")}
+function taskText(i,v){let d=get();d.tasks[i]=v;save(d)}function taskDone(i,v){let d=get();d.tasksDone=d.tasksDone||Array(5).fill(0);d.tasksDone[i]=v?1:0;save(d);stats()}function addTask(){let d=get();d.tasks.push("");d.tasksDone=d.tasksDone||[];save(d);render()}
+function renderSchedule(d){let s="";for(let h=7;h<=22;h++){s+="<div class='hour'>"+String(h).padStart(2,"0")+":00</div><div class='slot' contenteditable='true' onblur='slot("+h+",this.innerText)'>"+esc(d.slots[h]||"")+"</div>"}document.getElementById("schedule").innerHTML=s}
+function slot(h,v){let d=get();d.slots[h]=v;save(d)}
+function renderPrayers(d){let t=prayerData[key(selected)]||["—","—","—","—","—"];document.getElementById("prayers").innerHTML=pnames.map((n,i)=>"<button class='prayer "+(d.prayers[i]?"done":"")+"' onclick='pray("+i+")'><span>"+n+"</span><b>"+t[i]+"</b></button>").join("");let now=new Date(),times=t.map(x=>x.split(":").map(Number)),next=-1;for(let i=0;i<5;i++)if(t[i]!=="—"&&times[i][0]*60+times[i][1]>now.getHours()*60+now.getMinutes()){next=i;break}if(next<0){document.getElementById("nextName").textContent="Fajr demain";document.getElementById("count").textContent="À venir après la nuit";}else{document.getElementById("nextName").textContent=pnames[next]+" · "+t[next];let target=new Date(now);target.setHours(times[next][0],times[next][1],0,0);let diff=Math.max(0,target-now);document.getElementById("count").textContent="dans "+fmt(diff)}}
+function fmt(ms){let s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?String(h).padStart(2,"0")+" h ":"")+String(m).padStart(2,"0")+" min "+String(x).padStart(2,"0")+" s"}
+function pray(i){let d=get();d.prayers[i]=d.prayers[i]?0:1;save(d);render()}
+function renderHabits(d){document.getElementById("habits").innerHTML=habits.map((h,i)=>"<button class='chip "+(d.habits[i]?"on":"")+"' onclick='habit("+i+")'>"+h+"</button>").join("")}
+function habit(i){let d=get();d.habits[i]=d.habits[i]?0:1;save(d);render()}
+function renderChips(d){document.querySelectorAll("[data-k]").forEach(b=>{let on=d[b.dataset.k]===b.dataset.v;b.classList.toggle("on",on);b.onclick=()=>{let x=get();x[b.dataset.k]=b.dataset.v;save(x);render()}})}
+function stats(){let d=get();document.getElementById("doneCount").textContent=d.prayers.filter(Boolean).length;document.getElementById("habitCount").textContent=d.habits.filter(Boolean).length}
+function clearDay(){if(confirm("Effacer les données de cette journée ?")){localStorage.removeItem("dx:"+key(selected));render()}}
+function esc(x){return String(x||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+setInterval(()=>{clock();renderPrayers(get())},1000);clock();render();setInterval(()=>applyTheme(),60000);
+</script>
+</body></html>
