@@ -12,6 +12,11 @@ body.night{--bg:#e8f0ff;--bg2:#d9e7fb;--card:rgba(255,255,255,.76);--card2:rgba(
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(135deg,var(--bg),var(--bg2));color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Avenir Next","Segoe UI",sans-serif;transition:.5s}
 button,input,textarea{font:inherit}button{cursor:pointer}.app{max-width:1450px;margin:auto;padding:20px}
 header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}.brand{font-size:24px;font-weight:800;color:var(--accent)}.subtitle{font-size:11px;color:var(--muted);margin-top:3px}.header-actions{display:flex;gap:7px;flex-wrap:wrap}.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 12px}.pill:hover{background:var(--card2)}
+.planner-tabs{display:flex;gap:10px;margin:2px 0 14px}
+.planner-tab{border:0;background:rgba(255,255,255,.58);color:var(--muted);border-radius:18px;padding:13px 25px;font-weight:800;font-size:15px;box-shadow:0 3px 12px rgba(92,70,140,.05)}
+.planner-tab.active{background:var(--accent);color:#fff}
+.planner-tab:hover{background:var(--bg2);color:var(--accent)}
+.planner-tab.active:hover{background:var(--accent);color:#fff}
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-bottom:14px}.hero-card,.card{background:var(--card);border:1px solid rgba(255,255,255,.7);box-shadow:var(--shadow);backdrop-filter:blur(12px);border-radius:22px}
 .hero-card{padding:18px}.hero-title{font-size:12px;letter-spacing:1.2px;color:var(--muted);text-transform:uppercase;font-weight:800}.clock{font-size:48px;font-weight:800;color:var(--accent);margin-top:5px}.date{font-size:12px;color:var(--muted);text-transform:capitalize}.arabic{font-family:Georgia,serif;font-size:29px;color:var(--accent);text-align:right}.quote{font-family:Georgia,serif;font-size:13px;line-height:1.5;margin-top:5px}
 .layout{display:grid;grid-template-columns:295px minmax(0,1fr);gap:15px;align-items:start}.sidebar{padding:15px;position:sticky;top:12px}.main{min-width:0}.card{padding:15px;margin-bottom:14px}
@@ -33,6 +38,11 @@ textarea{width:100%;min-height:95px;border:1px solid var(--line);border-radius:1
 <body>
 <div class="app">
 <header><div><div class="brand">☾ Deen × Dunya</div><div class="subtitle">my living planner • organisation, études, ibadah & self-care</div></div><div class="header-actions"><button class="pill" onclick="go(-1)">‹</button><button class="pill" onclick="today()">Aujourd’hui</button><button class="pill" onclick="go(1)">›</button></div></header>
+<nav class="planner-tabs" aria-label="Navigation du planner">
+  <button class="planner-tab active" id="tabToday" onclick="today()">Aujourd’hui</button>
+  <button class="planner-tab" id="tabWeek" onclick="weekView()">Ma semaine</button>
+  <button class="planner-tab" id="tabReset" onclick="weeklyReset()">Weekly Reset</button>
+</nav>
 <div class="hero">
 <section class="hero-card"><div class="hero-title">mon moment</div><div class="clock" id="clock">--:--</div><div class="date" id="date">—</div></section>
 <section class="hero-card"><div class="arabic">الحمد لله</div><div class="quote">« Fais ce qui est bon pour ta dunya, sans oublier ce qui nourrit ton cœur et ton deen. »</div></section>
@@ -66,7 +76,7 @@ const prayerData={
 "2026-10-01":["06:20","13:35","16:48","19:25","20:50"],"2026-10-02":["06:21","13:35","16:47","19:23","20:48"],"2026-10-03":["06:23","13:35","16:45","19:21","20:46"],"2026-10-04":["06:24","13:35","16:44","19:19","20:44"],"2026-10-05":["06:26","13:34","16:42","19:17","20:42"],"2026-10-06":["06:27","13:34","16:41","19:15","20:40"],"2026-10-07":["06:28","13:34","16:39","19:13","20:38"],"2026-10-08":["06:30","13:33","16:38","19:11","20:36"],"2026-10-09":["06:31","13:33","16:36","19:09","20:34"],"2026-10-10":["06:33","13:33","16:35","19:07","20:32"],"2026-10-11":["06:34","13:33","16:33","19:05","20:30"],"2026-10-12":["06:36","13:32","16:32","19:03","20:28"],"2026-10-13":["06:37","13:32","16:30","19:02","20:26"],"2026-10-14":["06:38","13:32","16:29","19:00","20:24"],"2026-10-15":["06:40","13:32","16:28","18:58","20:23"],"2026-10-16":["06:41","13:31","16:26","18:56","20:21"],"2026-10-17":["06:43","13:31","16:25","18:54","20:19"],"2026-10-18":["06:44","13:31","16:23","18:52","20:17"],"2026-10-19":["06:45","13:31","16:22","18:50","20:15"],"2026-10-20":["06:47","13:31","16:20","18:48","20:14"],"2026-10-21":["06:48","13:30","16:19","18:47","20:12"],"2026-10-22":["06:49","13:30","16:17","18:45","20:10"],"2026-10-23":["06:51","13:30","16:16","18:43","20:09"],"2026-10-24":["06:52","13:30","16:15","18:41","20:07"],"2026-10-25":["05:54","12:30","15:13","17:40","19:05"],"2026-10-26":["05:55","12:30","15:12","17:38","19:04"],"2026-10-27":["05:56","12:30","15:11","17:36","19:02"],"2026-10-28":["05:58","12:30","15:09","17:34","19:01"],"2026-10-29":["05:59","12:30","15:08","17:33","18:59"],"2026-10-30":["06:00","12:29","15:07","17:31","18:58"],"2026-10-31":["06:02","12:29","15:05","17:30","18:56"]};
 const pnames=["Fajr","Dhohr","Asr","Maghrib","Isha"],habits=["Prière","Qur’an","Dhikr","Études","Eau","Self-care"];
 let selected=new Date();let cal=new Date(selected.getFullYear(),selected.getMonth(),1);
-const key=d=>d.toISOString().slice(0,10), names=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+const key=d=>{let y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),day=String(d.getDate()).padStart(2,"0");return y+"-"+m+"-"+day}, names=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
 function data(){let k="dx:"+key(selected);try{return JSON.parse(localStorage.getItem(k))||null}catch(e){return null}}
 function get(){return data()||{priority:"",studyFocus:"",selfcare:"",bag:"",tasks:Array(5).fill(""),meals:Array(3).fill(""),prayers:Array(5).fill(0),habits:Array(habits.length).fill(0),mood:"",energy:"",journal:"",slots:{}}}
 function save(d){localStorage.setItem("dx:"+key(selected),JSON.stringify(d))}
@@ -74,10 +84,10 @@ function applyTheme(){let h=new Date().getHours();document.body.classList.toggle
 function clock(){let d=new Date();document.getElementById("clock").textContent=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});document.getElementById("date").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});applyTheme()}
 function renderCalendar(){document.getElementById("calTitle").textContent=names[cal.getMonth()]+" "+cal.getFullYear();let s=days();let first=(new Date(cal.getFullYear(),cal.getMonth(),1).getDay()+6)%7;for(let i=0;i<first;i++)s+="<div class='day empty'></div>";let n=new Date(cal.getFullYear(),cal.getMonth()+1,0).getDate();for(let i=1;i<=n;i++){let d=new Date(cal.getFullYear(),cal.getMonth(),i),k=key(d),cls="day";if(k===key(new Date()))cls+=" today";if(k===key(selected))cls+=" sel";s+="<button class='"+cls+"' onclick='pick("+d.getFullYear()+","+d.getMonth()+","+i+")'>"+i+"</button>"}document.getElementById("cal").innerHTML="<div class='dow'>L</div><div class='dow'>M</div><div class='dow'>M</div><div class='dow'>J</div><div class='dow'>V</div><div class='dow'>S</div><div class='dow'>D</div>"+s}
 function days(){return ""}
-function pick(y,m,d){selected=new Date(y,m,d);cal=new Date(y,m,1);render()}
+function pick(y,m,d){selected=new Date(y,m,d);cal=new Date(y,m,1);setActiveTab(key(selected)===key(new Date())?"tabToday":"");render()}
 function month(x){cal.setMonth(cal.getMonth()+x);renderCalendar()}
-function go(x){selected.setDate(selected.getDate()+x);cal=new Date(selected.getFullYear(),selected.getMonth(),1);render()}
-function today(){selected=new Date();cal=new Date(selected.getFullYear(),selected.getMonth(),1);render()}
+function go(x){selected.setDate(selected.getDate()+x);cal=new Date(selected.getFullYear(),selected.getMonth(),1);setActiveTab(key(selected)===key(new Date())?"tabToday":"");render()}
+function today(){selected=new Date();cal=new Date(selected.getFullYear(),selected.getMonth(),1);setActiveTab("tabToday");render()}
 function bind(id,prop,d){let e=document.getElementById(id);e.value=d[prop]||"";e.oninput=()=>{d[prop]=e.value;save(d)}}
 function render(){let d=get();document.getElementById("dayTitle").textContent=selected.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});document.getElementById("daySub").textContent=selected.toLocaleDateString("fr-FR",{year:"numeric"});bind("priority","priority",d);bind("studyFocus","studyFocus",d);bind("selfcare","selfcare",d);bind("bag","bag",d);document.querySelectorAll(".meal").forEach((e,i)=>{e.value=d.meals[i]||"";e.oninput=()=>{d.meals[i]=e.value;save(d)}});document.getElementById("journal").value=d.journal||"";document.getElementById("journal").oninput=e=>{d.journal=e.target.value;save(d)};renderCalendar();renderTasks(d);renderSchedule(d);renderPrayers(d);renderHabits(d);renderChips(d);stats()}
 function renderTasks(d){document.getElementById("tasks").innerHTML=d.tasks.map((v,i)=>"<div class='item'><input class='check' type='checkbox' "+(d.tasksDone?.[i]?"checked":"")+" onchange='taskDone("+i+",this.checked)'><input class='field' value='"+esc(v)+"' placeholder='Tâche "+(i+1)+"…' oninput='taskText("+i+",this.value)'></div>").join("")}
@@ -91,6 +101,9 @@ function renderHabits(d){document.getElementById("habits").innerHTML=habits.map(
 function habit(i){let d=get();d.habits[i]=d.habits[i]?0:1;save(d);render()}
 function renderChips(d){document.querySelectorAll("[data-k]").forEach(b=>{let on=d[b.dataset.k]===b.dataset.v;b.classList.toggle("on",on);b.onclick=()=>{let x=get();x[b.dataset.k]=b.dataset.v;save(x);render()}})}
 function stats(){let d=get();document.getElementById("doneCount").textContent=d.prayers.filter(Boolean).length;document.getElementById("habitCount").textContent=d.habits.filter(Boolean).length}
+function setActiveTab(id){document.querySelectorAll(".planner-tab").forEach(b=>b.classList.remove("active"));document.getElementById(id)?.classList.add("active")}
+function weekView(){setActiveTab("tabWeek");document.querySelector(".sidebar")?.scrollIntoView({behavior:"smooth",block:"start"});renderCalendar()}
+function weeklyReset(){if(!confirm("Réinitialiser les habitudes et tâches de la semaine ?"))return;let base=new Date(selected);let day=(base.getDay()+6)%7;base.setDate(base.getDate()-day);for(let i=0;i<7;i++){let d=new Date(base);d.setDate(base.getDate()+i);let k="dx:"+key(d);try{let x=JSON.parse(localStorage.getItem(k));if(x){x.tasksDone=Array((x.tasks||[]).length).fill(0);x.habits=Array(habits.length).fill(0);localStorage.setItem(k,JSON.stringify(x))}}catch(e){}}setActiveTab("tabReset");render()}
 function clearDay(){if(confirm("Effacer les données de cette journée ?")){localStorage.removeItem("dx:"+key(selected));render()}}
 function esc(x){return String(x||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
 setInterval(()=>{clock();renderPrayers(get())},1000);clock();render();setInterval(()=>applyTheme(),60000);
