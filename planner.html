@@ -22,14 +22,14 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
 .months{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
 .actions{display:flex;gap:7px;flex-wrap:wrap}.small{font-size:11px;padding:7px 10px}
 @media(max-width:850px){.layout,.columns{grid-template-columns:1fr}.sidebar{order:2}.app{padding:12px}.date-title{font-size:20px}.months{grid-template-columns:repeat(3,1fr)}}
- .iman-wrap{margin:14px auto 0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fbeaf2;box-shadow:var(--shadow);width:190px;height:190px;max-width:100%;position:relative}.iman-wrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .28s ease}.iman-wrap img.fade{opacity:0}.iman-caption{display:none}</style></head>
+ .sidebar-bottom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.iman-wrap{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fbeaf2;box-shadow:var(--shadow);width:100%;aspect-ratio:1;position:relative}.iman-wrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .28s ease}.iman-wrap img.fade{opacity:0}.iman-caption{display:none}.mini-bilan{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#fff,#fdf0f5);box-shadow:var(--shadow);padding:11px;min-width:0}.mini-bilan h4{margin:0 0 9px;font-size:11px;color:var(--pink);font-weight:800}.mini-stat{display:flex;justify-content:space-between;gap:5px;font-size:10px;color:var(--deep);margin:7px 0}.mini-stat span:last-child{font-weight:800;color:var(--pink)}.mini-progress{height:7px;border-radius:999px;background:#f5dfe7;overflow:hidden;margin-top:9px}.mini-progress>div{height:100%;width:0;background:var(--pink);border-radius:999px;transition:width .25s ease}.mini-total{text-align:center;font-size:9px;color:var(--muted);margin-top:7px}</style></head>
 <body><div class="app">
 <div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
 <div class="actions"><button class="pill" id="prev">‹</button><button class="pill" id="today">Aujourd'hui</button><button class="pill" id="next">›</button></div></div>
 <div class="nav" id="monthNav"></div>
 <div class="layout"><aside class="card sidebar">
 <div class="calendar-head"><button class="pill small" id="mPrev">‹</button><div class="month-title" id="calTitle"></div><button class="pill small" id="mNext">›</button></div>
-<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div><div class="iman-wrap"><img id="inspirationImage" src="inspiration/choukr.webp" alt="Inspiration islamique rose"><div class="iman-caption">♡ inspiration ♡</div></div></div>
+<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div><div class="sidebar-bottom"><div class="iman-wrap"><img id="inspirationImage" src="inspiration/choukr.webp" alt="Inspiration islamique rose"><div class="iman-caption">♡ inspiration ♡</div></div><div class="mini-bilan"><h4>♡ MON BILAN</h4><div class="mini-stat"><span>🕌 Prières</span><span id="bilanPrayers">0/5</span></div><div class="mini-stat"><span>🌷 Habitudes</span><span id="bilanHabits">0/4</span></div><div class="mini-progress"><div id="bilanProgress"></div></div><div class="mini-total" id="bilanTotal">0% rempli</div></div></div></div>
 </aside><main>
 <div class="card priority"><div class="main-head"><div><div class="date-title" id="dateTitle"></div><div class="date-small" id="dateSmall"></div></div><button class="pill" id="clearDay">Effacer la journée</button></div>
 <div style="font-size:12px;font-weight:700;color:var(--pink)">PRIORITÉ DU JOUR ♡</div><input class="inputline" id="priority" placeholder="Ce qui compte vraiment aujourd'hui…"></div>
@@ -83,13 +83,14 @@ function renderAll(){
  let d=dayData(); document.getElementById("dateTitle").textContent=selected.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
  document.getElementById("dateSmall").textContent=selected.toLocaleDateString("fr-FR")+" • "+monthLabel(selected);
  let pr=document.getElementById("priority");pr.value=d.priority;pr.oninput=()=>{d.priority=pr.value;store(key(selected),d)};
- renderSchedule(d);renderList("todo",d.todo,"todo");renderList("study",d.study,"study");
+ renderSchedule(d);renderList("todo",d.todo,"todo");renderList("study",d.study,"study");updateMiniBilan(d);
  document.getElementById("prayers").innerHTML=["Fajr","Dhuhr","Asr","Maghrib","Isha"].map((x,i)=>`<button class="prayer ${d.prayers[i]?"on":""}" onclick="togglePrayer(${i})">${x}<br>${d.prayers[i]?"✓":"♡"}</button>`).join("");
  document.getElementById("habits").innerHTML=[["📖","Qur-\u0061n"],["💧","Eau"],["📚","Études"],["🧴","Self-care"]].map((x,i)=>`<button class="checkchip ${d.habits[i]?"on":""}" onclick="toggleHabit(${i})">${x[0]} ${x[1]} ${d.habits[i]?"✓":"♡"}</button>`).join("");
  ["breakfast","lunch","dinner"].forEach((id,i)=>{let e=document.getElementById(id);e.value=d.meal[i]||"";e.oninput=()=>{let x=dayData();x.meal[i]=e.value;store(key(selected),x)}});
  let n=document.getElementById("notes");n.value=d.notes||"";n.oninput=()=>{let x=dayData();x.notes=n.value;store(key(selected),x)};
  renderCalendar();renderNav();
 }
+function updateMiniBilan(d){let p=d.prayers.filter(Boolean).length,h=d.habits.filter(Boolean).length,total=p+h,percent=Math.round(total/9*100);document.getElementById("bilanPrayers").textContent=p+"/5";document.getElementById("bilanHabits").textContent=h+"/4";document.getElementById("bilanProgress").style.width=percent+"%";document.getElementById("bilanTotal").textContent=percent+"% rempli"}
 function togglePrayer(i){let d=dayData();d.prayers[i]=d.prayers[i]?0:1;store(key(selected),d);renderAll()}
 function toggleHabit(i){let d=dayData();d.habits[i]=d.habits[i]?0:1;store(key(selected),d);renderAll()}
 document.getElementById("prev").onclick=()=>setDay(new Date(selected.getTime()-86400000));
