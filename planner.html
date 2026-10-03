@@ -104,6 +104,13 @@ body{overflow-x:auto}
   .layout>.sidebar{width:300px!important}
   .layout>main{width:820px!important}
 }
+</style><style id="floating-widgets-final">
+.floating-widgets{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr);gap:12px;margin-bottom:14px}
+.floating-inspiration,.floating-bilan{background:linear-gradient(135deg,#fff,#fdf0f5);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
+.floating-inspiration .iman-wrap{width:100%;aspect-ratio:1.45}
+.floating-bilan{display:flex;flex-direction:column;justify-content:center;min-height:180px}
+.widget-title{font-size:12px;font-weight:800;color:var(--pink);margin-bottom:8px}
+@media(max-width:900px){.floating-widgets{grid-template-columns:1fr 1fr}}
 </style></head>
 <body><div class="app">
 <div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
@@ -111,8 +118,21 @@ body{overflow-x:auto}
 <div class="nav" id="monthNav"></div>
 <div class="layout"><aside class="card sidebar">
 <div class="calendar-head"><button class="pill small" id="mPrev">‹</button><div class="month-title" id="calTitle"></div><button class="pill small" id="mNext">›</button></div>
-<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div><div class="sidebar-bottom"><div class="iman-wrap"><img id="inspirationImage" src="inspiration/choukr.webp" alt="Inspiration islamique rose"><div class="iman-caption">♡ inspiration ♡</div></div><div class="mini-bilan"><h4>♡ MON BILAN</h4><div class="mini-stat"><span>🕌 Prières</span><span id="bilanPrayers">0/5</span></div><div class="mini-stat"><span>🌷 Habitudes</span><span id="bilanHabits">0/4</span></div><div class="mini-progress"><div id="bilanProgress"></div></div><div class="mini-total" id="bilanTotal">0% rempli</div></div></div></div>
+<div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div></div>
 </aside><main>
+<div class="floating-widgets">
+  <div class="floating-inspiration">
+    <div class="widget-title">♡ inspiration</div>
+    <div class="iman-wrap"><img id="inspirationImage" src="inspiration/choukr.webp" alt="Inspiration islamique rose"><div class="iman-caption">♡ inspiration ♡</div></div>
+  </div>
+  <div class="floating-bilan">
+    <h4>♡ MON BILAN</h4>
+    <div class="mini-stat"><span>🕌 Prières</span><span id="bilanPrayers">0/5</span></div>
+    <div class="mini-stat"><span>🌷 Habitudes</span><span id="bilanHabits">0/4</span></div>
+    <div class="mini-progress"><div id="bilanProgress"></div></div>
+    <div class="mini-total" id="bilanTotal">0% rempli</div>
+  </div>
+</div>
 <div class="day-dashboard">
   <div class="dashboard-head">
     <div><div class="dashboard-title">♡ mon espace du jour</div><div class="dashboard-sub">tout ce dont j'ai besoin, au même endroit</div></div>
