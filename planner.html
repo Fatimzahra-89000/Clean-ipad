@@ -16,7 +16,7 @@
 .priority{background:linear-gradient(90deg,#f9e5ec,#fff)}.inputline{width:100%;border:0;border-bottom:1px solid var(--line);padding:8px 2px;background:transparent;color:var(--deep);outline:0}
 .tasks{display:grid;gap:8px}.task{display:flex;gap:8px;align-items:center}.task input[type=text]{flex:1;border:0;border-bottom:1px solid #f0dfe5;padding:7px;background:transparent;outline:0}
 .schedule{display:grid;grid-template-columns:48px 1fr}.hour{font-size:11px;color:var(--muted);padding:8px 5px;border-bottom:1px dashed var(--line)}.slot{min-height:31px;border-bottom:1px dashed var(--line);outline:0;padding:7px}
-.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{padding:9px 5px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:11px;background:#fff;color:var(--deep);cursor:pointer}.prayer.on{background:var(--rose);border-color:var(--pink)}
+.prayer-panel{display:grid;gap:10px}.next-prayer{background:linear-gradient(90deg,#f9e5ec,#fff);border:1px solid var(--line);border-radius:14px;padding:11px;text-align:center}.next-prayer-label{font-size:10px;color:var(--muted);font-weight:700}.next-prayer-name{font-size:15px;color:var(--pink);font-weight:800;margin-top:3px}.next-prayer-count{font-size:11px;color:var(--deep);margin-top:3px}.prayer-source{font-size:9px;color:var(--muted);text-align:center}.prayers{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.prayer{padding:9px 5px;border:1px solid var(--line);border-radius:12px;text-align:center;font-size:11px;background:#fff;color:var(--deep);cursor:pointer}.prayer.on{background:var(--rose);border-color:var(--pink)}.prayer-time{font-size:13px;font-weight:800;color:var(--pink);margin-top:3px}.prayer-name{font-size:10px;font-weight:700}.prayer-state{font-size:9px;color:var(--muted);margin-top:3px}
 .checkrow{display:flex;gap:8px;flex-wrap:wrap}.checkchip{padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:11px;color:var(--deep);cursor:pointer}.checkchip.on{background:var(--rose);border-color:var(--pink)}
 textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:vertical;outline:0;background:#fff;color:var(--deep)}
 .months{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.month-btn{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--deep);font-size:11px}.month-btn:hover{background:var(--rose)}
@@ -146,7 +146,7 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
 <div class="box"><h4>♡ ÉTUDES / RÉVISIONS</h4><div class="tasks" id="study"></div></div></div>
 <div>
 <div class="box"><h4>♡ TO DO</h4><div class="tasks" id="todo"></div></div>
-<div class="box"><h4>♡ PRIÈRES</h4><div class="prayers" id="prayers"></div></div>
+<div class="box"><h4>♡ PRIÈRES • MOSQUÉE KHADIJA</h4><div class="prayer-panel"><div class="next-prayer"><div class="next-prayer-label">PROCHAINE PRIÈRE</div><div class="next-prayer-name" id="nextPrayerName">—</div><div class="next-prayer-count" id="nextPrayerCount">—</div></div><div class="prayers" id="prayers"></div><div class="prayer-source">Horaires de la Mosquée Khadija • Auxerre</div></div></div>
 <div class="box"><h4>♡ MES HABITUDES</h4><div class="checkrow" id="habits"></div></div>
 <div class="box"><h4>♡ REPAS DU JOUR</h4><input class="inputline" id="breakfast" placeholder="Petit-déjeuner"><input class="inputline" id="lunch" placeholder="Déjeuner"><input class="inputline" id="dinner" placeholder="Dîner"></div>
 </div></div></main></div></div>
@@ -198,7 +198,7 @@ function renderAll(){
  document.getElementById("dateSmall").textContent=selected.toLocaleDateString("fr-FR")+" • "+monthLabel(selected);
  let pr=document.getElementById("priority");pr.value=d.priority;pr.oninput=()=>{d.priority=pr.value;store(key(selected),d)};
  renderSchedule(d);renderList("todo",d.todo,"todo");renderList("study",d.study,"study");updateMiniBilan(d);
- document.getElementById("prayers").innerHTML=["Fajr","Dhuhr","Asr","Maghrib","Isha"].map((x,i)=>`<button class="prayer ${d.prayers[i]?"on":""}" onclick="togglePrayer(${i})">${x}<br>${d.prayers[i]?"✓":"♡"}</button>`).join("");
+ renderPrayers(d);
  document.getElementById("habits").innerHTML=[["📖","Qur-\u0061n"],["💧","Eau"],["📚","Études"],["🧴","Self-care"]].map((x,i)=>`<button class="checkchip ${d.habits[i]?"on":""}" onclick="toggleHabit(${i})">${x[0]} ${x[1]} ${d.habits[i]?"✓":"♡"}</button>`).join("");
  ["breakfast","lunch","dinner"].forEach((id,i)=>{let e=document.getElementById(id);e.value=d.meal[i]||"";e.oninput=()=>{let x=dayData();x.meal[i]=e.value;store(key(selected),x)}});
   renderCalendar();renderNav();
@@ -212,6 +212,31 @@ document.getElementById("today").onclick=()=>{let n=new Date();setDay(n<start?st
 document.getElementById("mPrev").onclick=()=>{calMonth.setMonth(calMonth.getMonth()-1);renderCalendar();renderNav()};
 document.getElementById("mNext").onclick=()=>{calMonth.setMonth(calMonth.getMonth()+1);renderCalendar();renderNav()};
 document.getElementById("clearDay").onclick=()=>{if(confirm("Effacer toutes les données de cette journée ?")){localStorage.removeItem("agenda:"+key(selected));renderAll()}};
+const prayerTimes={
+"2026-10-01":["06:20","13:35","16:48","19:25","20:50"],"2026-10-02":["06:21","13:35","16:47","19:23","20:48"],"2026-10-03":["06:23","13:35","16:45","19:21","20:46"],"2026-10-04":["06:24","13:35","16:44","19:19","20:44"],"2026-10-05":["06:26","13:34","16:42","19:17","20:42"],"2026-10-06":["06:27","13:34","16:41","19:15","20:40"],"2026-10-07":["06:28","13:34","16:39","19:13","20:38"],"2026-10-08":["06:30","13:33","16:38","19:11","20:36"],"2026-10-09":["06:31","13:33","16:36","19:09","20:34"],"2026-10-10":["06:33","13:33","16:35","19:07","20:32"],"2026-10-11":["06:34","13:33","16:33","19:05","20:30"],"2026-10-12":["06:36","13:32","16:32","19:03","20:28"],"2026-10-13":["06:37","13:32","16:30","19:02","20:26"],"2026-10-14":["06:38","13:32","16:29","19:00","20:24"],"2026-10-15":["06:40","13:32","16:28","18:58","20:23"],"2026-10-16":["06:41","13:31","16:26","18:56","20:21"],"2026-10-17":["06:43","13:31","16:25","18:54","20:19"],"2026-10-18":["06:44","13:31","16:23","18:52","20:17"],"2026-10-19":["06:45","13:31","16:22","18:50","20:15"],"2026-10-20":["06:47","13:31","16:20","18:48","20:14"],"2026-10-21":["06:48","13:30","16:19","18:47","20:12"],"2026-10-22":["06:49","13:30","16:17","18:45","20:10"],"2026-10-23":["06:51","13:30","16:16","18:43","20:09"],"2026-10-24":["06:52","13:30","16:15","18:41","20:07"],"2026-10-25":["05:54","12:30","15:13","17:40","19:05"],"2026-10-26":["05:55","12:30","15:12","17:38","19:04"],"2026-10-27":["05:56","12:30","15:11","17:36","19:02"],"2026-10-28":["05:58","12:30","15:09","17:34","19:01"],"2026-10-29":["05:59","12:30","15:08","17:33","18:59"],"2026-10-30":["06:00","12:29","15:07","17:31","18:58"],"2026-10-31":["06:02","12:29","15:05","17:30","18:56"]};
+const prayerNames=["Fajr","Dhohr","Asr","Maghrib","Isha"];
+function renderPrayers(d){
+ const times=prayerTimes[key(selected)];
+ const el=document.getElementById("prayers");
+ if(!times){el.innerHTML='<div style="grid-column:1/-1;text-align:center;font-size:10px;color:var(--muted)">Horaires non disponibles pour cette date.</div>';document.getElementById("nextPrayerName").textContent="—";document.getElementById("nextPrayerCount").textContent="Horaires à venir";return;}
+ el.innerHTML=prayerNames.map(function(name,i){return '<button class="prayer '+(d.prayers[i]?"on":"")+'" onclick="togglePrayer('+i+')"><span class="prayer-name">'+name+'</span><br><span class="prayer-time">'+times[i]+'</span><div class="prayer-state">'+(d.prayers[i]?"✓ faite":"♡ à faire")+'</div></button>';}).join("");
+ updateNextPrayer(times);
+}
+function updateNextPrayer(times){
+ const now=new Date();
+ if(key(selected)!==key(now)){document.getElementById("nextPrayerName").textContent="Prochaine : "+prayerNames[0]+" • "+times[0];document.getElementById("nextPrayerCount").textContent="Pour la journée sélectionnée";return;}
+ const mins=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
+ let next=-1;
+ for(let i=0;i<times.length;i++){const p=times[i].split(":").map(Number);if(p[0]*60+p[1]>mins){next=i;break;}}
+ if(next===-1){document.getElementById("nextPrayerName").textContent="Fajr demain";document.getElementById("nextPrayerCount").textContent="06:23";return;}
+ const p=times[next].split(":").map(Number),target=new Date(now);target.setHours(p[0],p[1],0,0);
+ const diff=Math.max(0,target-now),hh=Math.floor(diff/3600000),mm=Math.floor(diff%3600000/60000),ss=Math.floor(diff%60000/1000);
+ document.getElementById("nextPrayerName").textContent=prayerNames[next]+" • "+times[next];
+ document.getElementById("nextPrayerCount").textContent="dans "+(hh?hh+" h ":"")+String(mm).padStart(2,"0")+" min "+String(ss).padStart(2,"0")+" s";
+}
+renderPrayers(dayData());
+setInterval(function(){updateNextPrayer(prayerTimes[key(selected)]||[]);},1000);
+
 renderAll();
 
 const inspirationImages=["inspiration/choukr.webp","inspiration/aman.webp","inspiration/tawakkul.webp","inspiration/tawba.webp","inspiration/yaqin.webp","inspiration/mosque.webp","inspiration/flower.webp"];
