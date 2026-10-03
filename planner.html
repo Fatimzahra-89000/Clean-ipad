@@ -73,35 +73,29 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
   }
 }
 </style><style id="landscape-personalization">
-/* iPad paysage — retour au planner original, avec espace du jour compact */
 .app{max-width:1440px!important;padding:18px 22px!important}
 .layout{display:grid!important;grid-template-columns:300px minmax(0,1fr)!important;grid-template-areas:"side main"!important;gap:18px!important;align-items:start!important;width:100%!important}
 .layout>.sidebar{grid-area:side!important;width:300px!important;min-width:300px!important}
 .layout>main{grid-area:main!important;width:100%!important;min-width:0!important;margin:0!important;position:relative!important}
-.top-right-area{display:grid;grid-template-columns:minmax(0,1fr) 205px;gap:12px;align-items:stretch;margin-bottom:14px}
-.compact-dashboard{margin:0!important;min-width:0!important;padding:13px!important;border-radius:18px!important}
+.top-right-area{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:12px;align-items:stretch;margin-bottom:14px}
+.compact-dashboard{margin:0!important;padding:12px!important;min-width:0!important;border-radius:18px!important}
 .compact-dashboard .dashboard-head{margin-bottom:8px!important}
 .compact-dashboard .dashboard-title{font-size:16px!important}
 .compact-dashboard .dashboard-sub{font-size:10px!important}
-.dashboard-scroll{display:flex;gap:9px;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;scrollbar-width:thin}
-.dashboard-scroll .dash-box,.dashboard-scroll .custom-card{flex:0 0 150px;min-height:74px;padding:10px;border-radius:13px}
-.dashboard-scroll .dash-quote{flex:0 0 190px;min-height:74px;padding:10px;border-radius:13px;font-size:10px}
-.dashboard-scroll .dash-label{font-size:9px;margin-bottom:5px}
-.dashboard-scroll .dash-input{font-size:11px}
-.dashboard-scroll .choice-row{gap:3px}
-.dashboard-scroll .choice-row button{min-width:25px;height:25px;font-size:12px}
-.side-widgets{display:grid;grid-template-rows:1fr 1fr;gap:10px;min-width:0}
-.side-widgets>div{background:linear-gradient(135deg,#fff,#fdf0f5);border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:var(--shadow);min-width:0}
-.side-widgets .iman-wrap{width:100%;aspect-ratio:1.55}
-.side-widgets .widget-title{font-size:10px;margin-bottom:6px}
-.side-widgets .floating-bilan{display:flex;flex-direction:column;justify-content:center}
-.side-widgets .floating-bilan h4{margin-top:0}
+.dashboard-scroll{display:flex!important;gap:8px!important;overflow-x:auto!important;overflow-y:hidden!important;padding-bottom:5px!important;scrollbar-width:thin!important}
+.dashboard-scroll .dash-box,.dashboard-scroll .custom-card{flex:0 0 145px!important;min-height:70px!important;padding:9px!important;border-radius:12px!important}
+.dashboard-scroll .dash-quote{flex:0 0 180px!important;min-height:70px!important;padding:9px!important;font-size:10px!important}
+.dashboard-scroll .dash-label{font-size:9px!important;margin-bottom:5px!important}
+.dashboard-scroll .dash-input{font-size:11px!important}
+.dashboard-scroll .choice-row{gap:3px!important}
+.dashboard-scroll .choice-row button{min-width:24px!important;height:24px!important;font-size:11px!important}
+.side-widgets{display:grid!important;grid-template-rows:1fr 1fr!important;gap:10px!important;min-width:0!important}
+.side-widgets>div{background:linear-gradient(135deg,#fff,#fdf0f5)!important;border:1px solid var(--line)!important;border-radius:18px!important;padding:10px!important;box-shadow:var(--shadow)!important;min-width:0!important}
+.side-widgets .iman-wrap{width:100%!important;aspect-ratio:1.55!important}
+.side-widgets .widget-title{font-size:10px!important;margin-bottom:6px!important}
+.side-widgets .floating-bilan{display:flex!important;flex-direction:column!important;justify-content:center!important}
 .columns{grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr)!important;gap:14px!important}
-.columns>div:first-child .box:first-child{min-height:0}
-@media(max-width:900px){
- .app{min-width:1120px!important}
- .layout{grid-template-columns:300px 820px!important}
-}
+@media(max-width:900px){.app{min-width:1120px!important}.layout{grid-template-columns:300px 820px!important}}
 </style><style id="floating-widgets-final">
 .floating-widgets{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr);gap:12px;margin-bottom:14px}
 .floating-inspiration,.floating-bilan{background:linear-gradient(135deg,#fff,#fdf0f5);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
@@ -119,25 +113,38 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
 <div class="grid" id="calendar"></div><h3 style="margin-top:18px">♡ mes mois</h3><div class="months" id="months"></div></div>
 </aside><main>
 <div class="top-right-area">
-  <div class="dashboard-head">
-    <div><div class="dashboard-title">♡ mon espace du jour</div><div class="dashboard-sub">tout ce dont j'ai besoin, au même endroit</div></div>
-    <div class="dashboard-badge">🌷 2026 / 2027</div>
+  <div class="day-dashboard compact-dashboard">
+    <div class="dashboard-head">
+      <div><div class="dashboard-title">♡ mon espace du jour</div><div class="dashboard-sub">fais défiler → pour voir toutes les cases</div></div>
+      <div class="dashboard-badge">🌷</div>
+    </div>
+    <div class="dashboard-scroll">
+      <div class="dash-box"><div class="dash-label">🎯 OBJECTIF PRINCIPAL</div><input class="dash-input" id="dashGoal" placeholder="Ce que je veux accomplir…"></div>
+      <div class="dash-box"><div class="dash-label">📚 À RÉVISER</div><input class="dash-input" id="dashStudy" placeholder="Matière ou chapitre…"></div>
+      <div class="dash-box"><div class="dash-label">🤍 À NE PAS OUBLIER</div><input class="dash-input" id="dashRemember" placeholder="Un rappel important…"></div>
+      <div class="dash-box"><div class="dash-label">🧴 PETIT MOMENT POUR MOI</div><input class="dash-input" id="dashSelf" placeholder="Une petite chose agréable…"></div>
+      <div class="custom-card"><div class="dash-label">🌸 HUMEUR</div><div class="choice-row" id="moodChoices"><button data-v="🥰">🥰</button><button data-v="🙂">🙂</button><button data-v="😌">😌</button><button data-v="😐">😐</button><button data-v="😴">😴</button></div></div>
+      <div class="custom-card"><div class="dash-label">⚡ ÉNERGIE</div><div class="choice-row" id="energyChoices"><button data-v="1">♡</button><button data-v="2">♡</button><button data-v="3">♡</button><button data-v="4">♡</button><button data-v="5">♡</button></div></div>
+      <div class="custom-card"><div class="dash-label">🎧 FOCUS DU JOUR</div><input class="dash-input" id="customFocus" placeholder="Ex : philo, HGGSP…"></div>
+      <div class="custom-card"><div class="dash-label">🧴 SELF-CARE</div><input class="dash-input" id="customSelfcare" placeholder="Une petite chose pour moi…"></div>
+      <div class="custom-card"><div class="dash-label">🎒 SAC À PRÉPARER</div><input class="dash-input" id="customBag" placeholder="Livres, cahiers, affaires…"></div>
+      <div class="custom-card"><div class="dash-label">👗 TENUE / IDÉE</div><input class="dash-input" id="customOutfit" placeholder="Une idée pour demain…"></div>
+      <div class="dash-quote"><b>♡ rappel du jour</b><br>Avance doucement, fais de ton mieux, et laisse le reste à Allah.</div>
+    </div>
   </div>
-  <div class="dashboard-grid">
-    <div class="dash-box"><div class="dash-label">🎯 OBJECTIF PRINCIPAL</div><input class="dash-input" id="dashGoal" placeholder="Ce que je veux accomplir…"></div>
-    <div class="dash-box"><div class="dash-label">📚 À RÉVISER</div><input class="dash-input" id="dashStudy" placeholder="Matière ou chapitre…"></div>
-    <div class="dash-box"><div class="dash-label">🤍 À NE PAS OUBLIER</div><input class="dash-input" id="dashRemember" placeholder="Un rappel important…"></div>
-    <div class="dash-box"><div class="dash-label">🧴 PETIT MOMENT POUR MOI</div><input class="dash-input" id="dashSelf" placeholder="Une petite chose agréable…"></div>
+  <div class="side-widgets">
+    <div class="floating-inspiration">
+      <div class="widget-title">♡ inspiration</div>
+      <div class="iman-wrap"><img id="inspirationImage" src="inspiration/choukr.webp" alt="Inspiration islamique rose"></div>
+    </div>
+    <div class="floating-bilan">
+      <h4>♡ MON BILAN</h4>
+      <div class="mini-stat"><span>🕌 Prières</span><span id="bilanPrayers">0/5</span></div>
+      <div class="mini-stat"><span>🌷 Habitudes</span><span id="bilanHabits">0/4</span></div>
+      <div class="mini-progress"><div id="bilanProgress"></div></div>
+      <div class="mini-total" id="bilanTotal">0% rempli</div>
+    </div>
   </div>
-  <div class="custom-strip">
-    <div class="custom-card"><div class="dash-label">🌸 HUMEUR</div><div class="choice-row" id="moodChoices"><button data-v="🥰">🥰</button><button data-v="🙂">🙂</button><button data-v="😌">😌</button><button data-v="😐">😐</button><button data-v="😴">😴</button></div></div>
-    <div class="custom-card"><div class="dash-label">⚡ ÉNERGIE</div><div class="choice-row" id="energyChoices"><button data-v="1">♡</button><button data-v="2">♡</button><button data-v="3">♡</button><button data-v="4">♡</button><button data-v="5">♡</button></div></div>
-    <div class="custom-card"><div class="dash-label">🎧 FOCUS DU JOUR</div><input class="dash-input" id="customFocus" placeholder="Ex : philo, HGGSP…"></div>
-    <div class="custom-card"><div class="dash-label">🧴 SELF-CARE</div><input class="dash-input" id="customSelfcare" placeholder="Une petite chose pour moi…"></div>
-    <div class="custom-card"><div class="dash-label">🎒 SAC À PRÉPARER</div><input class="dash-input" id="customBag" placeholder="Livres, cahiers, affaires…"></div>
-    <div class="custom-card"><div class="dash-label">👗 TENUE / IDÉE</div><input class="dash-input" id="customOutfit" placeholder="Une idée pour demain…"></div>
-  </div>
-  <div class="dash-quote"><b>♡ rappel du jour</b> · Avance doucement, fais de ton mieux, et laisse le reste à Allah.</div>
 </div>
 <div class="card priority"><div class="main-head"><div><div class="date-title" id="dateTitle"></div><div class="date-small" id="dateSmall"></div></div><button class="pill" id="clearDay">Effacer la journée</button></div>
 <div style="font-size:12px;font-weight:700;color:var(--pink)">PRIORITÉ DU JOUR ♡</div><input class="inputline" id="priority" placeholder="Ce qui compte vraiment aujourd'hui…"></div>
