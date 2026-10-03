@@ -32,6 +32,46 @@ textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:
 .layout>.sidebar{width:280px!important}
 .layout>main{width:520px!important;margin-top:0!important}
 }
+</style><style id="absolute-layout-final">
+/* Position the daily area directly in the large space to the right of the calendar */
+.layout{
+  display:block!important;
+  position:relative!important;
+  width:100%!important;
+  min-height:900px!important;
+}
+.layout>.sidebar{
+  display:block!important;
+  width:280px!important;
+  min-width:280px!important;
+  position:relative!important;
+}
+.layout>main{
+  display:block!important;
+  position:absolute!important;
+  left:296px!important;
+  top:0!important;
+  width:calc(100% - 296px)!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+.layout>main .day-dashboard{
+  display:block!important;
+  width:100%!important;
+  margin:0 0 14px 0!important;
+}
+@media(max-width:700px){
+  .layout{
+    min-width:816px!important;
+    overflow-x:auto!important;
+  }
+  .layout>.sidebar{width:280px!important}
+  .layout>main{
+    left:296px!important;
+    width:520px!important;
+  }
+}
 </style></head>
 <body><div class="app">
 <div class="top"><div><div class="brand">♡ my digital agenda</div><div class="sub">clean girl • 2026 / 2027 • pensé pour iPad</div></div>
